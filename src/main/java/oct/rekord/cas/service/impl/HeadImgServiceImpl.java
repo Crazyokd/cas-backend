@@ -28,24 +28,25 @@ public class HeadImgServiceImpl implements HeadImgService {
     @Autowired
     UserInfoDAO userInfoDAO;
 
-    private String defaultHeadImageDirect;
+    private String headImageDefaultDir;
 
-    private String headImgDirect;
+    private String headImageDir;
 
     @Autowired
-    public HeadImgServiceImpl(@Value("${my.image.head-image-dir}") String headImgDir, @Value("${my.image.default-head-dir}") String defaultHeadImageDir) {
-        this.headImgDirect = headImgDir;
-        this.defaultHeadImageDirect = defaultHeadImageDir;
+    public HeadImgServiceImpl(@Value("${my.image.head-image-dir}") String headImageDir, @Value("${my.image.head-image-default-dir}") String headImageDefaultDir) {
+        this.headImageDir = headImageDir;
+        this.headImageDefaultDir = headImageDefaultDir;
 
         //创建默认头像的文件夹
-        File defaultHeadImageDirectory = new File(defaultHeadImageDirect);
-        if (!defaultHeadImageDirectory.exists()) {
-            defaultHeadImageDirectory.mkdirs();
+        File headImageDefaultDirectory = new File(headImageDefaultDir);
+        if (!headImageDefaultDirectory.exists()) {
+            headImageDefaultDirectory.mkdirs();
         }
+
         //创建用户设置头像的文件夹
-        File headImgDirectory = new File(headImgDirect);
-        if (!headImgDirectory.exists()) {
-            headImgDirectory.mkdirs();
+        File headImageDirectory = new File(headImageDir);
+        if (!headImageDirectory.exists()) {
+            headImageDirectory.mkdirs();
         }
 
     }
@@ -54,11 +55,12 @@ public class HeadImgServiceImpl implements HeadImgService {
     @Override
     public ReturnData setHeadImg(HttpServletRequest request, String userid, MultipartFile file) {
         Integer userId = Integer.valueOf(userid);
-//        Integer userId = Integer.valueOf(request.getAttribute("userId").toString());
-        String fileName = FileUtil.fileTransfer(file, this.headImgDirect, IMG_SUFFIX, 0, MAX_IMG_SIZE);
+        String fileName = FileUtil.fileTransfer(file, this.headImageDir, IMG_SUFFIX, 0, MAX_IMG_SIZE);
         String imgPath = userInfoDAO.selectHeadImgPathByUserId(userId);
-        userInfoDAO.updateHeadImgPath(userId, this.headImgDirect + fileName);
-        if(imgPath != null){
+        userInfoDAO.updateHeadImgPath(userId, this.headImageDir + fileName);
+
+        // 如果是默认图片则不进行删除
+        if(imgPath != null && !imgPath.contains(this.headImageDefaultDir)){
             File fileFromDB = new File(imgPath);
             if (fileFromDB.exists()) {
                 fileFromDB.delete();
@@ -71,36 +73,16 @@ public class HeadImgServiceImpl implements HeadImgService {
     @Override
     public ReturnData getHeadImg(HttpServletRequest request, String userid) throws Exception {
         Integer userId = Integer.valueOf(userid);
-//        Integer userId = Integer.valueOf(request.getAttribute("userId").toString());
         String imgPath = userInfoDAO.selectHeadImgPathByUserId(userId);
         byte[] bytes;
-        File file = null;
-
-        if (imgPath != null) {
-            //如果设置过头像
-            file = new File(imgPath);
-            if (file.exists()) {
-                //本地头像存在
-                bytes = FileUtil.fileToBytes(file);
-            } else {
-                File defaultFile = new File(this.defaultHeadImageDirect + "default.jpg");
-                if (defaultFile.exists()) {
-                    //从本地获取默认头像
-                    bytes = FileUtil.fileToBytes(defaultFile);
-                } else {
-                    return ReturnData.fail(502, "默认图片不存在");
-                }
-            }
+        File file = new File(imgPath);
+        if (file.exists()) {
+            //本地头像存在
+            bytes = FileUtil.fileToBytes(file);
         } else {
-            // 如果没设置过头像则使用默认头像
-            file = new File(defaultHeadImageDirect + "default.jpg");
-            if (file.exists()) {
-                //从本地获取默认头像
-                bytes = FileUtil.fileToBytes(file);
-            } else {
-                return ReturnData.fail(502, "默认图片不存在");
-            }
+            return ReturnData.fail(502, "图片不存在");
         }
+
         return ReturnData.success(Base64.getEncoder().encodeToString(bytes));
     }
 
