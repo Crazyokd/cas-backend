@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="oct.rekord.cas.dao.ActivityDAO">
+
+    <resultMap id="BaseResultMap" type="oct.rekord.cas.bean.Activity">
+        <id property="actId" column="act_id" jdbcType="INTEGER"/>
+        <result property="actName" column="act_name" jdbcType="VARCHAR"/>
+        <result property="actDescription" column="act_description" jdbcType="VARCHAR"/>
+        <result property="actImgPath" column="act_img_path" jdbcType="VARCHAR"/>
+        <result property="actRegCount" column="act_reg_count" jdbcType="INTEGER"/>
+        <result property="actRegMaxCount" column="act_reg_max_count" jdbcType="INTEGER"/>
+        <result property="actRegStartDate" column="act_reg_start_date" jdbcType="DATE"/>
+        <result property="actRegEndDate" column="act_reg_end_date" jdbcType="DATE"/>
+        <result property="actTime" column="act_time" jdbcType="TIMESTAMP"/>
+        <result property="actPlace" column="act_place" jdbcType="VARCHAR"/>
+        <result property="actCategory" column="act_category" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        activity.act_id, act_name, act_description, act_img_path,
+        act_reg_count, act_reg_max_count, act_reg_start_date, act_reg_end_date,
+        act_time, act_place, act_category
+    </sql>
+
+
+    <select id="selectRunningActivity" resultType="oct.rekord.cas.bean.Activity">
+        select
+        <include refid="Base_Column_List"/>
+        from activity
+        where datediff(current_date, act_reg_start_date) >= 0
+        and datediff(current_date, act_reg_end_date) &lt;= 0
+        order by `act_reg_start_date` desc
+        limit 0,4;
+    </select>
+
+
+    <select id="selectClosedActivity" resultType="oct.rekord.cas.bean.Activity">
+        select
+        <include refid="Base_Column_List"/>
+        from activity
+        where datediff(current_timestamp, act_reg_end_date) > 0
+        order by `act_reg_end_date` asc
+        limit 0,4;
+    </select>
+
+    <select id="selectTodayActivityByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from par_activity, activity
+        where par_activity.user_id = ${userId, jdbcType=INTEGER} and par_activity.act_id = activity.act_id
+        and datediff(current_timestamp, act_time) = 0
+        order by `act_time` desc;
+    </select>
+
+    <select id="selectParticipateActivityByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from par_activity, activity
+        where par_activity.user_id = ${userId, jdbcType=INTEGER} and par_activity.act_id = activity.act_id
+        order by `act_time` desc;
+    </select>
+<!--    <select id="selectRecent30DaysNoticeToAll" resultType="java.lang.Integer">-->
+<!--        select id-->
+<!--        from notice-->
+<!--        where target = 'all'-->
+<!--        and DATEDIFF(create_time, NOW()) &lt;= 0-->
+<!--        AND DATEDIFF(create_time, NOW()) &gt; -30-->
+<!--    </select>-->
+
+<!--    <select id="selectNoticeListByIdList" resultType="cn.edu.csust.coursecard.bean.Notice">-->
+<!--        select-->
+<!--        <include refid="Base_Column_List"/>-->
+<!--        from notice-->
+<!--        where id in-->
+<!--        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">-->
+<!--            #{item}-->
+<!--        </foreach>-->
+<!--    </select>-->
+
+
+<!--    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.edu.csust.coursecard.bean.Notice"-->
+<!--            useGeneratedKeys="true">-->
+<!--        insert into notice-->
+<!--        ( id, content, create_time-->
+<!--        , target, target_data)-->
+<!--        values ( #{id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}-->
+<!--        , #{target,jdbcType=VARCHAR}, #{targetData,jdbcType=VARCHAR})-->
+<!--    </insert>-->
+
+</mapper>
