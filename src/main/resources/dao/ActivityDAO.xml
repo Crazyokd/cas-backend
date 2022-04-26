@@ -16,6 +16,7 @@
         <result property="actTime" column="act_time" jdbcType="TIMESTAMP"/>
         <result property="actPlace" column="act_place" jdbcType="VARCHAR"/>
         <result property="actCategory" column="act_category" jdbcType="VARCHAR"/>
+        <result property="actSemesterId" column="semester_id" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -25,14 +26,14 @@
     </sql>
 
 
-    <select id="selectRunningActivity" resultType="oct.rekord.cas.bean.Activity">
+    <select id="selectRunningActivityByPageNum" resultType="oct.rekord.cas.bean.Activity">
         select
         <include refid="Base_Column_List"/>
         from activity
         where datediff(current_date, act_reg_start_date) >= 0
-        and datediff(current_date, act_reg_end_date) &lt;= 0
-        order by `act_reg_start_date` desc
-        limit 0,4;
+        and datediff(current_date, act_reg_end_date) &lt; 0
+        order by `act_reg_end_date` asc
+        limit #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER};
     </select>
 
 
@@ -41,8 +42,8 @@
         <include refid="Base_Column_List"/>
         from activity
         where datediff(current_timestamp, act_reg_end_date) > 0
-        order by `act_reg_end_date` asc
-        limit 0,4;
+        order by `act_reg_end_date` desc
+        limit #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER};
     </select>
 
     <select id="selectTodayActivityByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">

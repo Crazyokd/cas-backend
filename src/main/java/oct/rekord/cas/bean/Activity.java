@@ -31,4 +31,6 @@ public class Activity {
     // 活动类别
     private String actCategory;
 
+    private Integer actSemesterId;
+
 }

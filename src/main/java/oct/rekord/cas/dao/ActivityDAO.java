@@ -2,6 +2,8 @@ package oct.rekord.cas.dao;
 
 import oct.rekord.cas.bean.Activity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -9,9 +11,12 @@ import java.util.List;
 public interface ActivityDAO {
     String TABLE_NAME = "activity";
 
-    List<Activity> selectRunningActivity();
+    @Select({"select count(act_id) from ", TABLE_NAME})
+    int selectActivityCount();
 
-    List<Activity> selectClosedActivity();
+    List<Activity> selectRunningActivityByPageNum(@Param("startIndex") Integer startIndex, @Param("pageSize") Integer pageSize);
+
+    List<Activity> selectClosedActivity(@Param("startIndex") Integer startIndex, @Param("pageSize") Integer pageSize);
 
     List<Activity> selectTodayActivityByUserId(Integer userId);
 

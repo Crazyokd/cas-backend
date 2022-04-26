@@ -17,14 +17,21 @@ public class ActivityServiceImpl implements ActivityService {
     ActivityDAO activityDAO;
 
     @Override
-    public ReturnData getRunningActivity(HttpServletRequest request) {
-        List<Activity> activityList = activityDAO.selectRunningActivity();
+    public ReturnData getRunningActivity(HttpServletRequest request, Integer pageNum, Integer pageSize) {
+        pageNum = pageNum < 1 ? 1 : pageNum;
+        pageSize = pageSize == null ? 4 : pageSize;
+        int startIndex = (pageNum - 1) * pageSize;
+
+        List<Activity> activityList = activityDAO.selectRunningActivityByPageNum(startIndex, pageSize);
         return ReturnData.success(activityList);
     }
 
     @Override
-    public ReturnData getClosedActivity(HttpServletRequest request) {
-        List<Activity> activityList = activityDAO.selectClosedActivity();
+    public ReturnData getClosedActivity(HttpServletRequest request, Integer pageNum, Integer pageSize) {
+        pageNum = pageNum < 1 ? 1 : pageNum;
+        pageSize = pageSize == null ? 4 : pageSize;
+        int startIndex = (pageNum - 1) * pageSize;
+        List<Activity> activityList = activityDAO.selectClosedActivity(startIndex, pageSize);
         return ReturnData.success(activityList);
     }
 

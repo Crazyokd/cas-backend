@@ -5,9 +5,9 @@ import oct.rekord.cas.common.ReturnData;
 import javax.servlet.http.HttpServletRequest;
 
 public interface ActivityService {
-    ReturnData getRunningActivity(HttpServletRequest request);
+    ReturnData getRunningActivity(HttpServletRequest request, Integer pageNum, Integer pageSize);
 
-    ReturnData getClosedActivity(HttpServletRequest request);
+    ReturnData getClosedActivity(HttpServletRequest request, Integer pageNum, Integer pageSize);
 
     ReturnData getParticipateActivity(HttpServletRequest request, String userId);
 
