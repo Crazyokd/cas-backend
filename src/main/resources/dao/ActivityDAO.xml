@@ -52,7 +52,7 @@
         from par_activity, activity
         where par_activity.user_id = ${userId, jdbcType=INTEGER} and par_activity.act_id = activity.act_id
         and datediff(current_timestamp, act_time) = 0
-        order by `act_time` desc;
+        order by abs(hour(current_time()) - hour(act_time)) asc;
     </select>
 
     <select id="selectParticipateActivityByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
