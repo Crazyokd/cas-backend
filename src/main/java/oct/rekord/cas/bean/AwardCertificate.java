@@ -20,6 +20,7 @@ public class AwardCertificate {
     private String comment;
     private String imgPath;
     private Date updateDate;
+    private Integer semesterId;
 
     public AwardCertificate(Integer userId, String name, String isValid, String category, String explanation, String comment, String imgPath) {
         this.userId = userId;
