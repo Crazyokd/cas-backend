@@ -1,0 +1,56 @@
+my:
+  config:
+    exclude-uri: [ /login,/getLastVersion,/apk/**,/admin/** ]
+    include-uri: [ /** ]
+  image:
+    head-image-default-dir: /home/rekord/cas/img/headImg/default
+    head-image-dir: /home/rekord/cas/img/headImg/
+    ac-image-dir: /home/rekord/cas/img/acImg/
+    ac-image-default-dir: /home/rekord/cas/img/acImg/default
+  host: 127.0.0.1
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:dao/*.xml
+
+
+server:
+  port: 8081
+spring:
+  datasource:
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    filters: stat,wall
+    initialSize: 5
+    maxActive: 20
+    maxPoolPreparedStatementPerConnectionSize: 20
+    maxWait: 60000
+    minEvictableIdleTimeMillis: 300000
+    minIdle: 5
+    password: 17573401869yicao
+    poolPreparedStatements: true
+    testOnBorrow: false
+    testOnReturn: false
+    testWhileIdle: true
+    timeBetweenEvictionRunsMillis: 60000
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://120.55.14.194:3306/cas?useUnDruidDataSourceicode=true&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&useSSL=false
+    useGlobalDataSourceStat: true
+    username: rekord
+    validationQuery: SELECT 1 FROM DUAL
+  mvc:
+    throw-exception-if-no-handler-found: true
+  redis:
+    host: 120.55.14.194
+    password: 123456
+    port: 6379
+    timeout: 1000
+  resources:
+    add-mappings: false
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 500MB
+  session:
+    store-type: none
