@@ -27,8 +27,8 @@ public class ReturnData {
     public static ReturnData success(){
         return new ReturnData(CodeEnum.REQUEST_SUCCEED.getCode(),"请求成功");
     }
-    public static ReturnData success(String message) {
-        return new ReturnData(CodeEnum.REQUEST_SUCCEED.getCode(), message);
+    public static ReturnData success(String message, Object data) {
+        return new ReturnData(CodeEnum.REQUEST_SUCCEED.getCode(), message, data);
     }
 
     public static ReturnData fail(Integer code, String message){
