@@ -53,11 +53,11 @@ public class HeadImgServiceImpl implements HeadImgService {
 
 
     @Override
-    public ReturnData setHeadImg(HttpServletRequest request, String userid, MultipartFile file) {
-        Integer userId = Integer.valueOf(userid);
+    public ReturnData setHeadImg(HttpServletRequest request, String userId, MultipartFile file) {
+        Integer userIdInteger = Integer.valueOf(userId);
         String fileName = FileUtil.fileTransfer(file, this.headImageDir, IMG_SUFFIX, 0, MAX_IMG_SIZE);
-        String imgPath = userInfoDAO.selectHeadImgPathByUserId(userId);
-        userInfoDAO.updateHeadImgPath(userId, this.headImageDir + fileName);
+        String imgPath = userInfoDAO.selectHeadImgPathByUserId(userIdInteger);
+        userInfoDAO.updateHeadImgPath(userIdInteger, this.headImageDir + fileName);
 
         // 如果是默认图片则不进行删除
         if(imgPath != null && !imgPath.contains(this.headImageDefaultDir)){
@@ -71,14 +71,17 @@ public class HeadImgServiceImpl implements HeadImgService {
 
 
     @Override
-    public ReturnData getHeadImg(HttpServletRequest request, String userid) throws Exception {
-        Integer userId = Integer.valueOf(userid);
-        String imgPath = userInfoDAO.selectHeadImgPathByUserId(userId);
+    public ReturnData getHeadImg(HttpServletRequest request, String userId) {
+        String imgPath = userInfoDAO.selectHeadImgPathByUserId(Integer.valueOf(userId));
         byte[] bytes;
         File file = new File(imgPath);
         if (file.exists()) {
             //本地头像存在
-            bytes = FileUtil.fileToBytes(file);
+            try {
+                bytes = FileUtil.fileToBytes(file);
+            } catch (Exception e) {
+                return ReturnData.fail(502, "文件转换失败");
+            }
         } else {
             return ReturnData.fail(502, "图片不存在");
         }

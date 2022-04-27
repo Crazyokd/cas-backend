@@ -19,12 +19,12 @@ public interface HeadImgService {
      */
     long MAX_IMG_SIZE = 1024 * 1024 * 8;
 
-    ReturnData setHeadImg(HttpServletRequest request, String userid, MultipartFile file);
+    ReturnData setHeadImg(HttpServletRequest request, String userId, MultipartFile file);
 
     /**
      * 获得头像
      * @param request
      */
-    ReturnData getHeadImg(HttpServletRequest request, String userid) throws Exception;
+    ReturnData getHeadImg(HttpServletRequest request, String userId);
 
 }

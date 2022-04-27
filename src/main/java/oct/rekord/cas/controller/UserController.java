@@ -29,16 +29,12 @@ public class UserController {
     }
 
     @PostMapping("/getAvatar")
-    public ReturnData getHeadImg(HttpServletRequest request, @RequestParam("userid") String userid) {
-        try {
-            return headImgService.getHeadImg(request, userid);
-        }catch (Exception e) {
-            return ReturnData.fail(501, "头像获取失败");
-        }
+    public ReturnData getHeadImg(HttpServletRequest request, @RequestParam("userId") String userId) {
+            return headImgService.getHeadImg(request, userId);
     }
 
     @PostMapping("/setAvatar")
-    public ReturnData setHeadImg(HttpServletRequest request, @RequestParam("userid") String userid, @RequestParam("img") MultipartFile file) {
-        return headImgService.setHeadImg(request, userid, file);
+    public ReturnData setHeadImg(HttpServletRequest request, @RequestParam("userId") String userId, @RequestParam("headImg") MultipartFile file) {
+        return headImgService.setHeadImg(request, userId, file);
     }
 }
