@@ -27,12 +27,12 @@ public class ActivityController {
     }
 
     @PostMapping("/getParticipateActivity")
-    public ReturnData getParticipateActivity(HttpServletRequest request, @Param("userId") String userId) {
+    public ReturnData getParticipateActivity(HttpServletRequest request, @RequestParam("userId") String userId) {
         return activityService.getParticipateActivity(request, userId);
     }
 
     @PostMapping("/getTodayActivity")
-    public ReturnData getTodayActivity(HttpServletRequest request, @Param("userId") String userId) {
+    public ReturnData getTodayActivity(HttpServletRequest request, @RequestParam("userId") String userId) {
         return activityService.getTodayActivity(request, userId);
     }
 }
