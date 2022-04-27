@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
-public class ACController {
+public class AwardCertificationController {
 
     @Autowired
     AwardCertificateService acService;
@@ -26,8 +26,8 @@ public class ACController {
     @PostMapping("/uploadAwardCertificate")
     ReturnData uploadAwardCertificate(@RequestParam("userId") Integer userId, @RequestParam("name") String name, @RequestParam("isValid") String isValid,
                                       @RequestParam("category") String category, @RequestParam("explanation") String explanation, @RequestParam("comment") String comment,
-                                      @RequestParam("img") MultipartFile file) {
+                                      @RequestParam("semesterName") String semesterName, @RequestParam(name = "acImg", required = false) MultipartFile file) {
 
-        return acService.uploadAwardCertificateByUserId(userId, name, isValid, category, explanation, comment, file);
+        return acService.uploadAwardCertificateByUserId(userId, name, isValid, category, explanation, comment, semesterName, file);
     }
 }

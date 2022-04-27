@@ -20,5 +20,5 @@ public interface AwardCertificateService {
 
     ReturnData getAllAC(Integer userId);
 
-    ReturnData uploadAwardCertificateByUserId(Integer userId, String name, String isValid, String category, String explanation, String comment, MultipartFile file);
+    ReturnData uploadAwardCertificateByUserId(Integer userId, String name, String isValid, String category, String explanation, String comment, String semesterName, MultipartFile file);
 }

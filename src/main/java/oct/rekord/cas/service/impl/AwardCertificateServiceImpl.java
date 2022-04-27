@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import oct.rekord.cas.bean.AwardCertificate;
 import oct.rekord.cas.common.ReturnData;
 import oct.rekord.cas.dao.AwardCertificateDAO;
+import oct.rekord.cas.dao.SemesterDAO;
 import oct.rekord.cas.exception.BaseException;
 import oct.rekord.cas.service.AwardCertificateService;
 import oct.rekord.cas.util.FileUtil;
@@ -44,6 +45,8 @@ public class AwardCertificateServiceImpl implements AwardCertificateService {
 
     @Autowired
     AwardCertificateDAO awardCertificateDAO;
+    @Autowired
+    SemesterDAO semesterDAO;
 
     public String getImgByPath(String imgPath) throws Exception {
         byte[] bytes;
@@ -76,12 +79,18 @@ public class AwardCertificateServiceImpl implements AwardCertificateService {
     }
 
     @Override
-    public ReturnData uploadAwardCertificateByUserId(Integer userId, String name, String isValid, String category, String explanation, String comment, MultipartFile file) {
+    public ReturnData uploadAwardCertificateByUserId(Integer userId, String name, String isValid, String category, String explanation, String comment, String semesterName, MultipartFile file) {
         String fileName = FileUtil.fileTransfer(file, this.acImgDir, IMG_SUFFIX, 0, MAX_IMG_SIZE);
+
+        // 通过 semesterName 查询 semesterId
+        Integer semesterId = semesterDAO.selectSemesterIdBySemesterName(semesterName);
+        if (semesterId == null) {
+            return ReturnData.fail(502, "学年有误");
+        }
 
         // 若图片名为 default.jpg ，则使用默认路径
         String imgPath = (fileName.equals("default.jpg") ? this.acImgDefaultDir : this.acImgDir) + fileName;
-        AwardCertificate awardCertificate = new AwardCertificate(userId, name, isValid, category, explanation, comment, imgPath);
+        AwardCertificate awardCertificate = new AwardCertificate(userId, name, isValid, category, explanation, comment, imgPath, semesterId);
         try {
             awardCertificateDAO.updateAwardCertificate(awardCertificate);
         } catch (Exception e) {

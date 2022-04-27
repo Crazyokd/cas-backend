@@ -22,7 +22,7 @@ public class AwardCertificate {
     private Date updateDate;
     private Integer semesterId;
 
-    public AwardCertificate(Integer userId, String name, String isValid, String category, String explanation, String comment, String imgPath) {
+    public AwardCertificate(Integer userId, String name, String isValid, String category, String explanation, String comment, String imgPath, Integer semesterId) {
         this.userId = userId;
         this.name = name;
         this.isValid = isValid;
@@ -30,5 +30,6 @@ public class AwardCertificate {
         this.explanation = explanation;
         this.comment = comment;
         this.imgPath = imgPath;
+        this.semesterId = semesterId;
     }
 }
