@@ -46,4 +46,16 @@ public class ActivityServiceImpl implements ActivityService {
         List<Activity> activityList = activityDAO.selectTodayActivityByUserId(Integer.valueOf(userId));
         return ReturnData.success(activityList);
     }
+
+    @Override
+    public ReturnData getActivity(Integer actId) {
+        Activity activity;
+        try {
+            activity = activityDAO.selectActivityByActId(actId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ReturnData.fail(502, "获取失败");
+        }
+        return ReturnData.success(activity);
+    }
 }

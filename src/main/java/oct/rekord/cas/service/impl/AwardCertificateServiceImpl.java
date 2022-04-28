@@ -1,11 +1,13 @@
 package oct.rekord.cas.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import oct.rekord.cas.bean.Application;
 import oct.rekord.cas.bean.AwardCertificate;
 import oct.rekord.cas.common.ReturnData;
 import oct.rekord.cas.dao.AwardCertificateDAO;
 import oct.rekord.cas.dao.SemesterDAO;
 import oct.rekord.cas.exception.BaseException;
+import oct.rekord.cas.service.ApplicationService;
 import oct.rekord.cas.service.AwardCertificateService;
 import oct.rekord.cas.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,8 @@ public class AwardCertificateServiceImpl implements AwardCertificateService {
     AwardCertificateDAO awardCertificateDAO;
     @Autowired
     SemesterDAO semesterDAO;
+    @Autowired
+    ApplicationService applicationService;
 
     public String getImgByPath(String imgPath) throws Exception {
         byte[] bytes;
@@ -100,9 +104,16 @@ public class AwardCertificateServiceImpl implements AwardCertificateService {
     }
 
     @Override
-    public ReturnData getAC(String acId) {
-        return null;
+    public ReturnData getAC(Integer acId) {
+        AwardCertificate awardCertificate;
+        try {
+            awardCertificate = awardCertificateDAO.selectAwardCertificateByACId(acId);
+            String img = getImgByPath(awardCertificate.getImgPath());
+            awardCertificate.setImgPath(img);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ReturnData.fail(502, "获取失败");
+        }
+        return ReturnData.success(awardCertificate);
     }
-
-
 }

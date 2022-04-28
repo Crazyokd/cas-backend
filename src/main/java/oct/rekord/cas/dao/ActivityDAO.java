@@ -22,4 +22,6 @@ public interface ActivityDAO {
 
     List<Activity> selectParticipateActivityByUserId(Integer userId);
 
+    @Select("select * from activity where act_id = #{actId}")
+    Activity selectActivityByActId(Integer sctId);
 }

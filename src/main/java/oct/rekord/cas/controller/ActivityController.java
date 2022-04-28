@@ -35,4 +35,9 @@ public class ActivityController {
     public ReturnData getTodayActivity(HttpServletRequest request, @RequestParam("userId") String userId) {
         return activityService.getTodayActivity(request, userId);
     }
+
+    @PostMapping("/activity/get")
+    public ReturnData getOne(Integer actId) {
+        return activityService.getActivity(actId);
+    }
 }

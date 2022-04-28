@@ -18,5 +18,8 @@ public interface AwardCertificateDAO {
     int updateAwardCertificate(AwardCertificate awardCertificate);
 
     @Select("select * from award_certificate where acId = #{acId}")
-    AwardCertificate selectAwardCertificateByACId(String acId);
+    AwardCertificate selectAwardCertificateByACId(Integer acId);
+
+    @Update("update award_certificate set is_valid where ac_id = #{acId}")
+    int updateValidation(Integer acId);
 }

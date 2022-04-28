@@ -32,7 +32,7 @@ public class AwardCertificationController {
     }
 
     @PostMapping("/getAwardCertificate")
-    public ReturnData get(String acId) {
-        return null;
+    public ReturnData getOne(Integer acId) {
+        return acService.getAC(acId);
     }
 }

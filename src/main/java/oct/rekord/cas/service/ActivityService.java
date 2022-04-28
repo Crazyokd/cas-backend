@@ -12,4 +12,6 @@ public interface ActivityService {
     ReturnData getParticipateActivity(HttpServletRequest request, String userId);
 
     ReturnData getTodayActivity(HttpServletRequest request, String userId);
+
+    ReturnData getActivity(Integer actId);
 }
