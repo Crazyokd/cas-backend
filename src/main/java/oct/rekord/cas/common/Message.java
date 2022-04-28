@@ -41,19 +41,11 @@ public class Message {
         client.sendSms(sendSmsRequest);
     }
 
-    // 发送指定位数的短信验证码
-    public static String sendMessage(String phone, int messageCodeLength) throws Exception {
+    // 发送指定位数的短信验证码,若不加指定，则默认为 4
+    public static String sendMessage(String phone, Integer messageCodeLength) throws Exception{
+        messageCodeLength = messageCodeLength == null ? 4 : messageCodeLength;
         String code = "";
         for (int i = 0; i < messageCodeLength; i++) {
-            code += ((int) (Math.random() * 1000)) % 10;
-        }
-        sendMessageOrigin(phone, code);
-        return code;
-    }
-    // 发送4位短信验证码
-    public static String sendMessage(String phone) throws Exception {
-        String code = "";
-        for (int i = 0; i < 4; i++) {
             code += ((int) (Math.random() * 1000)) % 10;
         }
         sendMessageOrigin(phone, code);

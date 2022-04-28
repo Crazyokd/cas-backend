@@ -3,6 +3,7 @@ package oct.rekord.cas.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import oct.rekord.cas.bean.User;
+import oct.rekord.cas.common.Message;
 import oct.rekord.cas.common.ReturnData;
 import oct.rekord.cas.dao.UserInfoDAO;
 import oct.rekord.cas.service.UserService;;
@@ -51,5 +52,14 @@ public class UserServiceImpl implements UserService {
             return ReturnData.fail(502, "登录失败");
         }
 
+    }
+
+    @Override
+    public ReturnData getCode(String phone, Integer bits) {
+        try {
+            return ReturnData.success(Message.sendMessage(phone, bits));
+        } catch (Exception e) {
+            return ReturnData.fail(502, "发送短信验证码失败");
+        }
     }
 }
