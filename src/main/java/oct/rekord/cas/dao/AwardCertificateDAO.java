@@ -16,4 +16,7 @@ public interface AwardCertificateDAO {
     @Options(useGeneratedKeys = true, keyColumn = "acId", keyProperty = "acId")
     @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS, ") values(#{userId}, #{name}, #{isValid}, #{category}, #{explanation}, #{comment}, #{imgPath}, #{semesterId})"})
     int updateAwardCertificate(AwardCertificate awardCertificate);
+
+    @Select("select * from award_certificate where acId = #{acId}")
+    AwardCertificate selectAwardCertificateByACId(String acId);
 }

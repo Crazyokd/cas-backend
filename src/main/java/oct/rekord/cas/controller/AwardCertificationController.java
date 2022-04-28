@@ -30,4 +30,9 @@ public class AwardCertificationController {
 
         return acService.uploadAwardCertificateByUserId(userId, name, isValid, category, explanation, comment, semesterName, file);
     }
+
+    @PostMapping("/getAwardCertificate")
+    public ReturnData get(String acId) {
+        return null;
+    }
 }

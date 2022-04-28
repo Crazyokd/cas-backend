@@ -64,7 +64,7 @@ public class AwardCertificateServiceImpl implements AwardCertificateService {
     public ReturnData getAllAC(Integer userId) {
         List<AwardCertificate> awardCertificateList = awardCertificateDAO.selectAwardCertificateByUserID(userId);
 
-        // 将所有证书路径转化为证书路径
+        // 将所有证书路径转化为证书
         for (AwardCertificate ac : awardCertificateList) {
             String img = null;
             try {
@@ -97,6 +97,11 @@ public class AwardCertificateServiceImpl implements AwardCertificateService {
             return ReturnData.fail(502, "证书名重复");
         }
         return ReturnData.success("证书上传成功");
+    }
+
+    @Override
+    public ReturnData getAC(String acId) {
+        return null;
     }
 
 

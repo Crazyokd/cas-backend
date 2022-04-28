@@ -45,4 +45,7 @@ public interface UserInfoDAO {
      */
     @Select({"update ", TABLE_NAME, "set head_img_path = #{headImgPath} ", "where user_id = #{userId}"})
     Integer updateHeadImgPath(@Param("userId") Integer userId, @Param("headImgPath") String headImgPath);
+
+    @Select("select level from user where user_id = #{userId}")
+    String selectLevelByUserId(Integer userId);
 }
