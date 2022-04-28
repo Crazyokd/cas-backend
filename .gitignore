@@ -19,3 +19,5 @@ out
 
 # db test
 test_data.sql
+
+.DS_Store
