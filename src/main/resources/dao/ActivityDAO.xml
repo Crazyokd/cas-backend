@@ -17,12 +17,17 @@
         <result property="actPlace" column="act_place" jdbcType="VARCHAR"/>
         <result property="actCategory" column="act_category" jdbcType="VARCHAR"/>
         <result property="actSemesterId" column="semester_id" jdbcType="INTEGER"/>
+        <result property="actPunchStartTime" column="act_punch_start_time" jdbcType="TIMESTAMP"/>
+        <result property="actPunchEndTime" column="act_punch_end_time" jdbcType="TIMESTAMP"/>
+        <result property="actPunchLongitude" column="act_punch_longitude" jdbcType="DOUBLE"/>
+        <result property="actPunchLatitude" column="act_punch_latitude" jdbcType="DOUBLE"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         activity.act_id, act_name, act_description, act_img_path,
         act_reg_count, act_reg_max_count, act_reg_start_date, act_reg_end_date,
-        act_time, act_place, act_category
+        act_time, act_place, act_category, semester_id, act_punch_start_time, act_punch_end_time,
+        act_punch_longitude, act_punch_latitude
     </sql>
 
 
@@ -30,8 +35,8 @@
         select
         <include refid="Base_Column_List"/>
         from activity
-        where datediff(current_date, act_reg_start_date) >= 0
-        and datediff(current_date, act_reg_end_date) &lt; 0
+        where act_is_publish = '1' and
+        datediff(current_date, act_reg_start_date) >= 0 and datediff(current_date, act_reg_end_date) &lt; 0
         order by `act_reg_end_date` asc
         limit #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER};
     </select>
@@ -41,7 +46,7 @@
         select
         <include refid="Base_Column_List"/>
         from activity
-        where datediff(current_timestamp, act_reg_end_date) > 0
+        where act_is_publish = '1' and datediff(current_timestamp, act_reg_end_date) > 0
         order by `act_reg_end_date` desc
         limit #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER};
     </select>
