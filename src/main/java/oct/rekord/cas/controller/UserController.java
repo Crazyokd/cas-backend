@@ -39,4 +39,10 @@ public class UserController {
     public ReturnData setHeadImg(HttpServletRequest request, @RequestParam("userId") String userId, @RequestParam("headImg") MultipartFile file) {
         return headImgService.setHeadImg(request, userId, file);
     }
+
+    @PostMapping("/get-code")
+    public ReturnData getCode(@RequestParam("phone") String phone, @RequestParam(value = "bits", required = false) Integer bits) {
+        return userService.getCode(phone, bits);
+    }
+
 }
