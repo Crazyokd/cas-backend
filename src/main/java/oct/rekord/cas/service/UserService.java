@@ -1,5 +1,6 @@
 package oct.rekord.cas.service;
 
+import oct.rekord.cas.bean.AuthorityRecord;
 import oct.rekord.cas.common.ReturnData;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,5 +13,5 @@ public interface UserService {
 
     ReturnData getCode(String phone, Integer bits);
 
-    ReturnData authorize(Integer childId, Integer parentId);
+    ReturnData authorize(AuthorityRecord authorityRecord);
 }

@@ -1,5 +1,6 @@
 package oct.rekord.cas.dao;
 
+import oct.rekord.cas.bean.AuthorityRecord;
 import oct.rekord.cas.bean.User;
 import org.apache.ibatis.annotations.*;
 
@@ -57,4 +58,8 @@ public interface UserInfoDAO {
 
     @Select("select manager_id from manager_1 where user_id = #{parentId}")
     int selectManagerIdByUserId(Integer parentId);
+
+    @Insert("insert into authority_record(from_user_id, to_user_id, action) " +
+            "values(#{fromUserId}, #{toUserId}, #{action})")
+    int insertAuthorityRecord(AuthorityRecord authorityRecord);
 }

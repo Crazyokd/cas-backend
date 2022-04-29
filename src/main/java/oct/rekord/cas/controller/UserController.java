@@ -1,5 +1,6 @@
 package oct.rekord.cas.controller;
 
+import oct.rekord.cas.bean.AuthorityRecord;
 import oct.rekord.cas.bean.User;
 import oct.rekord.cas.common.ReturnData;
 import oct.rekord.cas.service.HeadImgService;
@@ -47,7 +48,7 @@ public class UserController {
     }
 
     @PostMapping("/authorize")
-    public ReturnData authorize(Integer childId, Integer parentId) {
-        return userService.authorize(childId, parentId);
+    public ReturnData authorize(AuthorityRecord authorityRecord) {
+        return userService.authorize(authorityRecord);
     }
 }
