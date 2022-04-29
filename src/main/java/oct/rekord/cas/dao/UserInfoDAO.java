@@ -48,4 +48,13 @@ public interface UserInfoDAO {
 
     @Select("select level from user where user_id = #{userId}")
     String selectLevelByUserId(Integer userId);
+
+    @Update("update user set level = '2' where user_id = #{userId}")
+    int updateUserLevel(Integer userId);
+
+    @Insert("insert into manager_2(user_id, parent) values(#{userId}, #{managerId})")
+    int insertManager2(Integer userId, Integer managerId);
+
+    @Select("select manager_id from manager_1 where user_id = #{parentId}")
+    int selectManagerIdByUserId(Integer parentId);
 }

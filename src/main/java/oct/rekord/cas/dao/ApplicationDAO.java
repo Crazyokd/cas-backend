@@ -30,7 +30,7 @@ public interface ApplicationDAO {
     @Select("select * from application where application_from_id = #{userId}")
     List<Application> selectMyApplicationByFromId(Integer userId);
 
-    @Update("update application set status = #{status}, reply_time  = #{replyTime} " +
+    @Update("update application set status = #{status}, reply_time = #{replyTime} " +
             "where application_id = #{applicationId}")
     int updateApplication(Application application);
 }
