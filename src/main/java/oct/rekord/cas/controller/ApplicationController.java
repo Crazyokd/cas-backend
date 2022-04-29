@@ -24,6 +24,16 @@ public class ApplicationController {
         return applicationService.getAllApplication(userId);
     }
 
+    @PostMapping("/get-new")
+    public ReturnData getNew(Integer userId) {
+        return applicationService.getNewApplication(userId);
+    }
+
+    @PostMapping("/get-my")
+    public ReturnData getMy(Integer userId) {
+        return applicationService.getMyApplication(userId);
+    }
+
     @PostMapping("/process")
     public ReturnData process(Application application) {
         return applicationService.processApplication(application);

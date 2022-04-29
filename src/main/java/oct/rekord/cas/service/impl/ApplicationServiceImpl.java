@@ -9,7 +9,6 @@ import oct.rekord.cas.service.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -56,6 +55,30 @@ public class ApplicationServiceImpl implements ApplicationService {
         List<Application> applications;
         try {
             applications = applicationDAO.selectApplicationByToId(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ReturnData.fail(502, "获取失败");
+        }
+        return ReturnData.success(applications);
+    }
+
+    @Override
+    public ReturnData getNewApplication(Integer userId) {
+        List<Application> applications;
+        try {
+            applications = applicationDAO.selectNewApplicationByToId(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ReturnData.fail(502, "获取失败");
+        }
+        return ReturnData.success(applications);
+    }
+
+    @Override
+    public ReturnData getMyApplication(Integer userId) {
+        List<Application> applications;
+        try {
+            applications = applicationDAO.selectMyApplicationByFromId(userId);
         } catch (Exception e) {
             e.printStackTrace();
             return ReturnData.fail(502, "获取失败");
