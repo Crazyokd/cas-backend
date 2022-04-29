@@ -3,6 +3,7 @@ package oct.rekord.cas.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import oct.rekord.cas.bean.Application;
 import oct.rekord.cas.bean.AwardCertificate;
+import oct.rekord.cas.common.ApplicationCategoryEnum;
 import oct.rekord.cas.common.ReturnData;
 import oct.rekord.cas.dao.AwardCertificateDAO;
 import oct.rekord.cas.dao.SemesterDAO;
@@ -27,6 +28,7 @@ public class AwardCertificateServiceImpl implements AwardCertificateService {
 
     private String acImgDir;
     private String acImgDefaultDir;
+
 
     @Autowired
     public AwardCertificateServiceImpl(@Value("${my.image.ac-image-dir}") String acImgDir, @Value("${my.image.ac-image-default-dir}") String acImgDefaultDir) {
@@ -94,9 +96,13 @@ public class AwardCertificateServiceImpl implements AwardCertificateService {
 
         // 若图片名为 default.jpg ，则使用默认路径
         String imgPath = (fileName.equals("default.jpg") ? this.acImgDefaultDir : this.acImgDir) + fileName;
-        AwardCertificate awardCertificate = new AwardCertificate(userId, name, isValid, category, explanation, comment, imgPath, semesterId);
+        AwardCertificate awardCertificate = new AwardCertificate(userId, name, "0", category, explanation, comment, imgPath, semesterId);
         try {
             awardCertificateDAO.updateAwardCertificate(awardCertificate);
+            if (isValid.equals("1")) {
+                Integer linkId = awardCertificate.getAcId();
+                applicationService.insertApplication(new Application(userId, ApplicationCategoryEnum.CERTIFICATE_APPLICATION.getCategory(), linkId, comment));
+            }
         } catch (Exception e) {
             return ReturnData.fail(502, "证书名重复");
         }

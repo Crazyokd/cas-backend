@@ -1,12 +1,16 @@
 package oct.rekord.cas.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Application {
     private Integer applicationId;
     private Integer applicationFromId;
@@ -22,4 +26,11 @@ public class Application {
     private Date replyTime;
     private Integer expireDay;
     private String comment;
+
+    public Application(Integer applicationFromId, String category, Integer linkId, String comment) {
+        this.applicationFromId = applicationFromId;
+        this.category = category;
+        this.linkId = linkId;
+        this.comment = comment;
+    }
 }

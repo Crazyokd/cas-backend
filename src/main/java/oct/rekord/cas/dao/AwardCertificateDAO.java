@@ -13,9 +13,9 @@ public interface AwardCertificateDAO {
     @Select({"select * from", TABLE_NAME, "where user_id = #{user_id}"})
     List<AwardCertificate> selectAwardCertificateByUserID(@Param("user_id") Integer userId);
 
-    @Options(useGeneratedKeys = true, keyColumn = "acId", keyProperty = "acId")
     @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS, ") values(#{userId}, #{name}, #{isValid}, #{category}, #{explanation}, #{comment}, #{imgPath}, #{semesterId})"})
-    int updateAwardCertificate(AwardCertificate awardCertificate);
+    @SelectKey(statement = "select last_insert_id()", resultType = Integer.class, before = false, keyProperty = "acId")
+    Integer updateAwardCertificate(AwardCertificate awardCertificate);
 
     @Select("select * from award_certificate where acId = #{acId}")
     AwardCertificate selectAwardCertificateByACId(Integer acId);
