@@ -10,5 +10,9 @@ public interface ApplicationService {
 
     ReturnData getAllApplication(Integer userId);
 
+    ReturnData getNewApplication(Integer userId);
+
+    ReturnData getMyApplication(Integer userId);
+
     ReturnData processApplication(Application application);
 }
