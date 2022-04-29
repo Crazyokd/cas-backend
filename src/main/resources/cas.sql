@@ -42,6 +42,19 @@ create table if not exists manager_2
 		constraint manager2_parent foreign key(`parent`) references manager_1(`manager_id`) on delete cascade
     ) engine=InnoDB auto_increment=125 default charset=utf8;
 
+drop table if exists authority_record;
+-- 创建权限记录表
+create table if not exists authority_record
+	(
+		`authority_record_id` int(11) not null auto_increment comment '权限记录ID',
+        `from_user_id` int(11) not null comment '权限管理主动方',
+        `to_user_id` int(11) not null comment '权限管理被动方',
+        `action` enum('0', '1') not null comment '权限管理操作',
+        primary key(`authority_record_id`) using btree,
+        constraint authority_record_from_id foreign key(`from_user_id`) references user(`user_id`),
+        constraint authority_record_to_id foreign key(`to_user_id`) references user(`user_id`)
+    ) ENGINE=InnoDB default charset=utf8;
+
 
 
 -- drop table if exists head_img;
@@ -183,7 +196,7 @@ create table if not exists application
         constraint application_to_id foreign key(`application_to_id`) references user(`user_id`) on delete cascade
 	) ENGINE=InnoDB auto_increment=500 default charset=utf8;
     
-    
+
 
 DROP TABLE IF EXISTS `version`;
 -- 创建版本表
