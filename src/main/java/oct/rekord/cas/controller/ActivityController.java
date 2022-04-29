@@ -38,8 +38,8 @@ public class ActivityController {
         return activityService.getTodayActivity(request, userId);
     }
 
-    @PostMapping("/activity/get")
-    public ReturnData getOne(Integer actId) {
+    @PostMapping("/get-detail")
+    public ReturnData getOne(@RequestParam("actId") Integer actId) {
         return activityService.getActivity(actId);
     }
 }
