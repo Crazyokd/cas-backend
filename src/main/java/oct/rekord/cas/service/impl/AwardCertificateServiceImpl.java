@@ -98,7 +98,7 @@ public class AwardCertificateServiceImpl implements AwardCertificateService {
         String imgPath = (fileName.equals("default.jpg") ? this.acImgDefaultDir : this.acImgDir) + fileName;
         AwardCertificate awardCertificate = new AwardCertificate(userId, name, "0", category, explanation, comment, imgPath, semesterId);
         try {
-            awardCertificateDAO.updateAwardCertificate(awardCertificate);
+            awardCertificateDAO.uploadAwardCertificate(awardCertificate);
             if (isValid.equals("1")) {
                 Integer linkId = awardCertificate.getAcId();
                 applicationService.insertApplication(new Application(userId, ApplicationCategoryEnum.CERTIFICATE_APPLICATION.getCategory(), linkId, comment));
