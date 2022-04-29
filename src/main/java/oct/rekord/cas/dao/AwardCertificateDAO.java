@@ -15,11 +15,11 @@ public interface AwardCertificateDAO {
 
     @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS, ") values(#{userId}, #{name}, #{isValid}, #{category}, #{explanation}, #{comment}, #{imgPath}, #{semesterId})"})
     @SelectKey(statement = "select last_insert_id()", resultType = Integer.class, before = false, keyProperty = "acId")
-    Integer updateAwardCertificate(AwardCertificate awardCertificate);
+    Integer uploadAwardCertificate(AwardCertificate awardCertificate);
 
     @Select("select * from award_certificate where acId = #{acId}")
     AwardCertificate selectAwardCertificateByACId(Integer acId);
 
-    @Update("update award_certificate set is_valid where ac_id = #{acId}")
+    @Update("update award_certificate set is_valid = '1' where ac_id = #{acId}")
     int updateValidation(Integer acId);
 }

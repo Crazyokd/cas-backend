@@ -1,7 +1,9 @@
 package oct.rekord.cas.service.impl;
 
 import oct.rekord.cas.bean.Application;
+import oct.rekord.cas.common.ApplicationCategoryEnum;
 import oct.rekord.cas.common.ReturnData;
+import oct.rekord.cas.dao.ActivityDAO;
 import oct.rekord.cas.dao.ApplicationDAO;
 import oct.rekord.cas.dao.AwardCertificateDAO;
 import oct.rekord.cas.dao.UserInfoDAO;
@@ -20,6 +22,8 @@ public class ApplicationServiceImpl implements ApplicationService {
     private UserInfoDAO userInfoDAO;
     @Autowired
     private AwardCertificateDAO awardCertificateDAO;
+    @Autowired
+    private ActivityDAO activityDAO;
 
     /**
      * 插入申请
@@ -92,8 +96,16 @@ public class ApplicationServiceImpl implements ApplicationService {
         application.setReplyTime(now);
         try {
             applicationDAO.updateApplication(application);
-            if ("1".equals(application.getStatus())) {
-                applicationDAO.updateApplication(application);
+            application = applicationDAO.selectApplicationById(application.getApplicationId());
+            String category = application.getCategory();
+            String status = application.getStatus();
+            if (application.getStatus().equals("1")) {
+                // 证书申请
+                if (category.equals(ApplicationCategoryEnum.CERTIFICATE_APPLICATION.getCategory())) {
+                    awardCertificateDAO.updateValidation(application.getLinkId());
+                } else {
+                    activityDAO.updateValidation(application.getLinkId());
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

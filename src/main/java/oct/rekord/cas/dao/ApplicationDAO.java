@@ -33,4 +33,7 @@ public interface ApplicationDAO {
     @Update("update application set status = #{status}, reply_time = #{replyTime} " +
             "where application_id = #{applicationId}")
     int updateApplication(Application application);
+
+    @Select({"select * from application where application_id = #{applicationId}"})
+    Application selectApplicationById(Integer applicationId);
 }
