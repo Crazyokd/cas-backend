@@ -2,6 +2,7 @@ package oct.rekord.cas.service.impl;
 
 
 import lombok.extern.slf4j.Slf4j;
+import oct.rekord.cas.bean.AuthorityRecord;
 import oct.rekord.cas.bean.User;
 import oct.rekord.cas.common.Message;
 import oct.rekord.cas.common.ReturnData;
@@ -64,11 +65,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReturnData authorize(Integer childId, Integer parentId) {
+    public ReturnData authorize(AuthorityRecord authorityRecord) {
         try {
-            userInfoDAO.updateUserLevel(childId);
-            int managerId = userInfoDAO.selectManagerIdByUserId(parentId);
-            userInfoDAO.insertManager2(childId, managerId);
+            userInfoDAO.updateUserLevel(authorityRecord.getToUserId());
+            int managerId = userInfoDAO.selectManagerIdByUserId(authorityRecord.getFromUserId());
+            userInfoDAO.insertManager2(authorityRecord.getToUserId(), managerId);
+            userInfoDAO.insertAuthorityRecord(authorityRecord);
         } catch (Exception e) {
             e.printStackTrace();
             return ReturnData.fail(502, "授权失败");
