@@ -7,7 +7,9 @@ import oct.rekord.cas.dao.VersionDAO;
 import oct.rekord.cas.service.VersionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
+@Service("versionService")
 public class VersionServiceImpl implements VersionService {
     @Value("${my.host}")
     String host;
