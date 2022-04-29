@@ -20,4 +20,8 @@ out
 # db test
 test_data.sql
 
+# system related
 .DS_Store
+
+# push.bat
+push.bat
