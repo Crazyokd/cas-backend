@@ -7,14 +7,22 @@ my:
     head-image-dir: /home/rekord/cas/img/headImg/
     ac-image-dir: /home/rekord/cas/img/acImg/
     ac-image-default-dir: /home/rekord/cas/img/acImg/default
-    activity-image-default-dir: /home/rekord/cas/img/activityImg/default
-    activity-image-dir: /home/rekord/cas/img/activityImg/
+  message:
+    accessKeyId: LTAI5t9JEwW7hiSUMVGHWTp7
+    accessKeySecret: hLCfCZdNnIsjSTjiFQCNog47ixVMVy
   host: 127.0.0.1
 
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath*:dao/*.xml
+
+pagehelper:
+  helperDialect: mysql
+  params: count=countSql
+  reasonable: true
+  supportMethodsArguments: true
+
 
 
 server:
@@ -56,3 +64,12 @@ spring:
       max-request-size: 500MB
   session:
     store-type: none
+
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    consumer:
+      group-id: default_consumer_group
+      enable-auto-commit: true
+      auto-commit-interval: 3000
+    listener:
+      missing-topics-fatal: false

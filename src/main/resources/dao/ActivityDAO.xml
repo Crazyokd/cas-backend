@@ -67,13 +67,6 @@
         where par_activity.user_id = ${userId, jdbcType=INTEGER} and par_activity.act_id = activity.act_id
         order by `act_time` desc;
     </select>
-<!--    <select id="selectRecent30DaysNoticeToAll" resultType="java.lang.Integer">-->
-<!--        select id-->
-<!--        from notice-->
-<!--        where target = 'all'-->
-<!--        and DATEDIFF(create_time, NOW()) &lt;= 0-->
-<!--        AND DATEDIFF(create_time, NOW()) &gt; -30-->
-<!--    </select>-->
 
 <!--    <select id="selectNoticeListByIdList" resultType="cn.edu.csust.coursecard.bean.Notice">-->
 <!--        select-->
@@ -84,15 +77,5 @@
 <!--            #{item}-->
 <!--        </foreach>-->
 <!--    </select>-->
-
-
-<!--    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.edu.csust.coursecard.bean.Notice"-->
-<!--            useGeneratedKeys="true">-->
-<!--        insert into notice-->
-<!--        ( id, content, create_time-->
-<!--        , target, target_data)-->
-<!--        values ( #{id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}-->
-<!--        , #{target,jdbcType=VARCHAR}, #{targetData,jdbcType=VARCHAR})-->
-<!--    </insert>-->
 
 </mapper>
