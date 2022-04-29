@@ -60,4 +60,9 @@ public class ActivityController {
                                       @RequestParam("actCategory") String actCategory, @RequestParam("semesterName") String semesterName, @RequestParam("userId") Integer userId) throws ParseException {
         return activityService.publishActivity(userId, actName, actDescription, actImg, actRegMaxCount, actRegStartDate, actRegEndDate, actTime, actPlace, actCategory, semesterName);
     }
+
+    @PostMapping("/register")
+    public ReturnData registerActivity(@RequestParam("userId") Integer userId, @RequestParam("actId") Integer actId, @RequestParam("registerNumber") Integer registerNumber) {
+        return activityService.registerActivity(userId, actId, registerNumber);
+    }
 }

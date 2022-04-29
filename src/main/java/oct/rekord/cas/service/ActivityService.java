@@ -32,4 +32,6 @@ public interface ActivityService {
 
     ReturnData publishActivity(Integer userId, String actName, String actDescription, MultipartFile actImg, Integer actRegMaxCount, Date actRegStartDate,
                                Date actRegEndDate, Date actTime, String actPlace, String actCategory, String semesterName);
+
+    ReturnData registerActivity(Integer userId, Integer actId, Integer registerNumber);
 }

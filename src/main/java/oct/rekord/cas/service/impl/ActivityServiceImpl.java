@@ -10,6 +10,7 @@ import oct.rekord.cas.dao.SemesterDAO;
 import oct.rekord.cas.service.ActivityService;
 import oct.rekord.cas.service.ApplicationService;
 import oct.rekord.cas.util.FileUtil;
+import org.apache.logging.log4j.message.ReusableMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -114,5 +115,11 @@ public class ActivityServiceImpl implements ActivityService {
             return ReturnData.fail(502, "活动创建失败");
         }
         return ReturnData.success("活动创建成功");
+    }
+
+    @Override
+    public ReturnData registerActivity(Integer userId, Integer actId, Integer registerNumber) {
+        activityDAO.registerActivity(userId, actId, registerNumber);
+        return ReturnData.success();
     }
 }
