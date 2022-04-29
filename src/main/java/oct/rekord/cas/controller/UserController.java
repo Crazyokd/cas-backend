@@ -1,5 +1,6 @@
 package oct.rekord.cas.controller;
 
+import oct.rekord.cas.bean.User;
 import oct.rekord.cas.common.ReturnData;
 import oct.rekord.cas.service.HeadImgService;
 import oct.rekord.cas.service.UserService;
@@ -45,4 +46,8 @@ public class UserController {
         return userService.getCode(phone, bits);
     }
 
+    @PostMapping("/authorize")
+    public ReturnData authorize(Integer childId, Integer parentId) {
+        return userService.authorize(childId, parentId);
+    }
 }

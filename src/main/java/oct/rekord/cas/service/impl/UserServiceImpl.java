@@ -62,4 +62,17 @@ public class UserServiceImpl implements UserService {
             return ReturnData.fail(502, "发送短信验证码失败");
         }
     }
+
+    @Override
+    public ReturnData authorize(Integer childId, Integer parentId) {
+        try {
+            userInfoDAO.updateUserLevel(childId);
+            int managerId = userInfoDAO.selectManagerIdByUserId(parentId);
+            userInfoDAO.insertManager2(childId, managerId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ReturnData.fail(502, "授权失败");
+        }
+        return ReturnData.success("授权成功");
+    }
 }

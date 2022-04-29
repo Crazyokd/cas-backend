@@ -11,4 +11,6 @@ public interface UserService {
     ReturnData login(HttpServletRequest request, String username, String password, String agent);
 
     ReturnData getCode(String phone, Integer bits);
+
+    ReturnData authorize(Integer childId, Integer parentId);
 }
