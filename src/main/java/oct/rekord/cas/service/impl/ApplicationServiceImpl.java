@@ -44,7 +44,6 @@ public class ApplicationServiceImpl implements ApplicationService {
     public ReturnData addApplication(Application application) {
         try {
             insertApplication(application);
-            awardCertificateDAO.updateValidation(application.getLinkId());
         } catch (Exception e) {
             e.printStackTrace();
             return ReturnData.fail(502, "申请失败");
@@ -70,6 +69,9 @@ public class ApplicationServiceImpl implements ApplicationService {
         application.setReplyTime(now);
         try {
             applicationDAO.updateApplication(application);
+            if ("1".equals(application.getStatus())) {
+                applicationDAO.updateApplication(application);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return ReturnData.fail(502, "处理失败");
