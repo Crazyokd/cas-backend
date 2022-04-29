@@ -7,23 +7,25 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
-public class AwardCertificationController {
+@RequestMapping("awardcertificate")
+public class AwardCertificateController {
 
     @Autowired
     AwardCertificateService acService;
 
-    @PostMapping("/getAllAwardCertificate")
+    @PostMapping("/get-all")
     ReturnData getAllAC(@RequestParam("userId") Integer userId) {
         return acService.getAllAC(userId);
     }
 
-    @PostMapping("/uploadAwardCertificate")
+    @PostMapping("/upload")
     ReturnData uploadAwardCertificate(@RequestParam("userId") Integer userId, @RequestParam("name") String name, @RequestParam("isValid") String isValid,
                                       @RequestParam("category") String category, @RequestParam("explanation") String explanation, @RequestParam("comment") String comment,
                                       @RequestParam("semesterName") String semesterName, @RequestParam(name = "acImg", required = false) MultipartFile file) {
@@ -31,7 +33,7 @@ public class AwardCertificationController {
         return acService.uploadAwardCertificateByUserId(userId, name, isValid, category, explanation, comment, semesterName, file);
     }
 
-    @PostMapping("/getAwardCertificate")
+    @PostMapping("/get-detail")
     public ReturnData getOne(Integer acId) {
         return acService.getAC(acId);
     }
