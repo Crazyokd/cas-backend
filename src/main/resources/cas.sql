@@ -49,7 +49,7 @@ create table if not exists authority_record
 		`authority_record_id` int(11) not null auto_increment comment '权限记录ID',
         `from_user_id` int(11) not null comment '权限管理主动方',
         `to_user_id` int(11) not null comment '权限管理被动方',
-        `action` enum('0', '1') not null comment '权限管理操作',
+        `action` enum('0', '1') not null comment '权限管理操作, 0表示撤销，1表示授予',
         primary key(`authority_record_id`) using btree,
         constraint authority_record_from_id foreign key(`from_user_id`) references user(`user_id`),
         constraint authority_record_to_id foreign key(`to_user_id`) references user(`user_id`)
@@ -86,17 +86,17 @@ drop table if exists activity;
 -- 创建活动表
 create table if not exists activity 
 	(
-		act_id int(11) not null auto_increment comment '活动ID',
-        act_name varchar(255) unique not null comment '活动名',
-        act_description varchar(255) comment '活动描述',
-        act_img_path varchar(255) default '/home/rekord/cas/img/actImg/default/default.jpg' comment '活动预览图',
-        act_reg_count int(11) not null default 0 comment '已报名人数',
-        act_reg_max_count int(11) not null comment '报名人数上限',
-        act_reg_start_date date comment '报名开始时间',
-        act_reg_end_date date comment '报名截止时间',
-        act_time datetime(0) comment '活动时间',
-        act_place varchar(255) comment '活动地点',
-        act_category enum('劳育','体育','德育','智育') default '德育' comment '活动类别',
+		`act_id` int(11) not null auto_increment comment '活动ID',
+        `act_name` varchar(255) unique not null comment '活动名',
+        `act_description` varchar(255) comment '活动描述',
+        `act_img_path` varchar(255) default '/home/rekord/cas/img/activityImg/default/default.jpg' comment '活动预览图',
+        `act_reg_count` int(11) not null default 0 comment '已报名人数',
+        `act_reg_max_count` int(11) not null comment '报名人数上限',
+        `act_reg_start_date` date comment '报名开始时间',
+        `act_reg_end_date` date comment '报名截止时间',
+        `act_time` datetime(0) comment '活动时间',
+        `act_place` varchar(255) comment '活动地点',
+        `act_category` enum('劳育','体育','德育','智育') default '德育' comment '活动类别',
         `semester_id` int(11) not null comment '所属学期',
         `act_punch_start_time` datetime comment '活动打卡开始时间',
         `act_punch_end_time` datetime comment '活动打卡结束时间',
@@ -151,7 +151,7 @@ create table if not exists award_certificate
         `comment` varchar(255) not null default "" comment '证书备注',
         `img_path` varchar(255) default '/home/rekord/cas/img/acImg/default/default.jpg' comment '图片路径',
         `update_date` datetime DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP(0) comment '更新时间',
-        `semester_id` int(11) not null,
+        `semester_id` int(11) not null comment '学期ID',
         primary key(`ac_id`),
         unique index ac_name(`name`) using btree,
         constraint ac_user_id foreign key(`user_id`) references user(`user_id`) on delete cascade,
@@ -200,15 +200,16 @@ create table if not exists application
 
 DROP TABLE IF EXISTS `version`;
 -- 创建版本表
-CREATE TABLE if not exists `version`  (
-  `version_id` int NOT NULL AUTO_INCREMENT comment '版本ID',
-  `version_name` varchar(255) NOT NULL comment '版本名',
-  `apk_path` varchar(255) NOT NULL comment 'apk路径',
-  `update_time` datetime DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `info` varchar(255) DEFAULT NULL comment '版本信息',
-  PRIMARY KEY (`version_id`) USING BTREE,
-  UNIQUE INDEX `vname`(`version_name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 default charset=utf8;
+CREATE TABLE if not exists `version`  
+	(
+		`version_id` int NOT NULL AUTO_INCREMENT comment '版本ID',
+		`version_name` varchar(255) NOT NULL comment '版本名',
+		`apk_path` varchar(255) NOT NULL comment 'apk路径',
+		`update_time` datetime DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+		`info` varchar(255) DEFAULT NULL comment '版本信息',
+		PRIMARY KEY (`version_id`) USING BTREE,
+		UNIQUE INDEX `vname`(`version_name`) USING BTREE
+	) ENGINE = InnoDB AUTO_INCREMENT = 10 default charset=utf8;
 
 
 SET FOREIGN_KEY_CHECKS = 1;
