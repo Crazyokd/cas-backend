@@ -2,23 +2,16 @@ package oct.rekord.cas.service.impl;
 
 
 import oct.rekord.cas.common.ReturnData;
-import oct.rekord.cas.dao.HeadImgDAO;
 import oct.rekord.cas.dao.UserInfoDAO;
 import oct.rekord.cas.service.HeadImgService;
 import oct.rekord.cas.util.FileUtil;
-import org.jsoup.Connection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.util.Base64;
 
 @Service("headImgService")
@@ -71,22 +64,25 @@ public class HeadImgServiceImpl implements HeadImgService {
 
 
     @Override
-    public ReturnData getHeadImg(HttpServletRequest request, String userId) {
-        String imgPath = userInfoDAO.selectHeadImgPathByUserId(Integer.valueOf(userId));
-        byte[] bytes;
-        File file = new File(imgPath);
-        if (file.exists()) {
-            //本地头像存在
-            try {
-                bytes = FileUtil.fileToBytes(file);
-            } catch (Exception e) {
-                return ReturnData.fail(502, "文件转换失败");
+    public ReturnData getHeadImg(Integer userId) {
+        String fileName = userInfoDAO.selectHeadImgPathByUserId(userId);
+        try {
+            return ReturnData.success(Base64.getEncoder().encodeToString(FileUtil.fileNameToBytes(fileName)));
+        } catch (Exception e) {
+            if ("文件不存在".equals(e.getMessage())) {
+                File defaultHeadImg = new File(this.headImageDefaultDir + "default.jpg");
+                if (!defaultHeadImg.exists()) {
+                    return ReturnData.fail(502, "默认文件不存在，请上传默认图片");
+                } else {
+                    try {
+                        return ReturnData.success(Base64.getEncoder().encodeToString(FileUtil.fileToBytes(defaultHeadImg)));
+                    } catch (Exception ex) {
+                        return ReturnData.fail(502, ex.getMessage());
+                    }
+                }
             }
-        } else {
-            return ReturnData.fail(502, "图片不存在");
+            return ReturnData.fail(502, e.getMessage());
         }
-
-        return ReturnData.success(Base64.getEncoder().encodeToString(bytes));
     }
 
 }

@@ -33,8 +33,8 @@ public class UserController {
     }
 
     @PostMapping("/get-avatar")
-    public ReturnData getHeadImg(HttpServletRequest request, @RequestParam("userId") String userId) {
-            return headImgService.getHeadImg(request, userId);
+    public ReturnData getHeadImg(@RequestParam("userId") Integer userId) {
+            return headImgService.getHeadImg(userId);
     }
 
     @PostMapping("/set-avatar")

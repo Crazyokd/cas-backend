@@ -21,10 +21,6 @@ public interface HeadImgService {
 
     ReturnData setHeadImg(HttpServletRequest request, String userId, MultipartFile file);
 
-    /**
-     * 获得头像
-     * @param request
-     */
-    ReturnData getHeadImg(HttpServletRequest request, String userId);
+    ReturnData getHeadImg(Integer userId);
 
 }

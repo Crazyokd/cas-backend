@@ -3,11 +3,11 @@ my:
     exclude-uri: [ /login,/getLastVersion,/apk/**,/admin/** ]
     include-uri: [ /** ]
   image:
-    head-image-default-dir: /home/rekord/cas/img/headImg/default
+    head-image-default-dir: /home/rekord/cas/img/headImg/default/
     head-image-dir: /home/rekord/cas/img/headImg/
     ac-image-dir: /home/rekord/cas/img/acImg/
-    ac-image-default-dir: /home/rekord/cas/img/acImg/default
-    activity-image-default-dir: /home/rekord/cas/img/activityImg/default
+    ac-image-default-dir: /home/rekord/cas/img/acImg/default/
+    activity-image-default-dir: /home/rekord/cas/img/activityImg/default/
     activity-image-dir: /home/rekord/cas/img/activityImg/
   host: 127.0.0.1
 
