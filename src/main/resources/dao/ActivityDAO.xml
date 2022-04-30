@@ -16,7 +16,7 @@
         <result property="actTime" column="act_time" jdbcType="TIMESTAMP"/>
         <result property="actPlace" column="act_place" jdbcType="VARCHAR"/>
         <result property="actCategory" column="act_category" jdbcType="VARCHAR"/>
-        <result property="actSemesterId" column="semester_id" jdbcType="INTEGER"/>
+        <result property="SemesterId" column="semester_id" jdbcType="INTEGER"/>
         <result property="actPunchStartTime" column="act_punch_start_time" jdbcType="TIMESTAMP"/>
         <result property="actPunchEndTime" column="act_punch_end_time" jdbcType="TIMESTAMP"/>
         <result property="actPunchLongitude" column="act_punch_longitude" jdbcType="DOUBLE"/>
