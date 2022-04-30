@@ -40,7 +40,7 @@ public class FileUtil {
 
     public static boolean delFile(String path){
         File file = new File(path);
-        if(file.exists()){
+        if (file.exists()){
             file.delete();
             return true;
         }
@@ -48,11 +48,20 @@ public class FileUtil {
     }
 
     public static byte[] fileToBytes(File file) throws Exception {
-        try(FileInputStream fis = new FileInputStream(file)){
+        try (FileInputStream fis = new FileInputStream(file)){
             byte[] bytesArray = new byte[(int) file.length()];
             fis.read(bytesArray);
             return bytesArray;
-        }catch (Exception e){
+        } catch (Exception e){
+            throw new Exception("文件转换异常");
+        }
+    }
+
+    public static byte[] fileNameToBytes(String fileName) throws Exception {
+        File file = new File(fileName);
+        if (file.exists()) {
+            return fileToBytes(file);
+        } else {
             throw new Exception("文件不存在");
         }
     }
