@@ -66,15 +66,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ReturnData authorize(AuthorityRecord authorityRecord) {
+        String newLevel = ("1".equals(authorityRecord.getAction()) ? "2" : "3");
         try {
-            userInfoDAO.updateUserLevel(authorityRecord.getToUserId());
-            int managerId = userInfoDAO.selectManagerIdByUserId(authorityRecord.getFromUserId());
-            userInfoDAO.insertManager2(authorityRecord.getToUserId(), managerId);
+            // 更新用户等级
+            userInfoDAO.updateUserLevel(authorityRecord.getToUserId(), newLevel);
+            if ("1".equals(authorityRecord.getAction())) {
+                int managerId = userInfoDAO.selectManagerIdByUserId(authorityRecord.getFromUserId());
+                userInfoDAO.insertManager2(authorityRecord.getToUserId(), managerId);
+            } else {
+                userInfoDAO.removeByUserId(authorityRecord.getToUserId());
+            }
+            // 生成一条授权记录
             userInfoDAO.insertAuthorityRecord(authorityRecord);
         } catch (Exception e) {
             e.printStackTrace();
-            return ReturnData.fail(502, "授权失败");
+            return ReturnData.fail(502, "权限操作失败");
         }
-        return ReturnData.success("授权成功");
+        return ReturnData.success("权限操作成功");
     }
 }
