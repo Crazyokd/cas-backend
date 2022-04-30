@@ -5,12 +5,10 @@ import oct.rekord.cas.bean.Application;
 import oct.rekord.cas.common.ApplicationCategoryEnum;
 import oct.rekord.cas.common.ReturnData;
 import oct.rekord.cas.dao.ActivityDAO;
-import oct.rekord.cas.dao.ApplicationDAO;
 import oct.rekord.cas.dao.SemesterDAO;
 import oct.rekord.cas.service.ActivityService;
 import oct.rekord.cas.service.ApplicationService;
 import oct.rekord.cas.util.FileUtil;
-import org.apache.logging.log4j.message.ReusableMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,9 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.time.LocalDate;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("activityService")
 public class ActivityServiceImpl implements ActivityService {
@@ -85,14 +84,26 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public ReturnData getActivity(Integer actId) {
-        Activity activity;
+        Map<String, Object> data = new LinkedHashMap<>();
         try {
-            activity = activityDAO.selectActivityByActId(actId);
+            Activity activity = activityDAO.selectActivityByActId(actId);
+            data.put("活动名称", activity.getActName());
+            data.put("活动描述", activity.getActDescription());
+            data.put("活动图片", FileUtil.fileNameToBytes(activity.getActImgPath()));
+            data.put("活动已报名人数", activity.getActRegCount());
+            data.put("活动报名人数上限", activity.getActRegMaxCount());
+            data.put("活动报名开始时间", activity.getActRegStartDate());
+            data.put("活动报名截止时间", activity.getActRegEndDate());
+            data.put("活动开始时间", activity.getActTime());
+            data.put("活动地点", activity.getActPlace());
+            data.put("活动类别", activity.getActCategory());
+            data.put("活动是否成功发布", activity.getActIsPublish() == "1" ? "是" : "否");
+            data.put("活动所属学年", semesterDAO.selectSemesterNameBySemesterId(activity.getSemesterId()));
         } catch (Exception e) {
             e.printStackTrace();
             return ReturnData.fail(502, "获取失败");
         }
-        return ReturnData.success(activity);
+        return ReturnData.success(data);
     }
 
     @Override

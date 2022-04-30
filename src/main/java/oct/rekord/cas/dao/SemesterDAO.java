@@ -10,4 +10,7 @@ public interface SemesterDAO {
 
     @Select({"select semester_id from ", TABLE_NAME, " where semester_name = #{semesterName}"})
     Integer selectSemesterIdBySemesterName(@Param("semesterName") String semesterName);
+
+    @Select({"select semester_name from ", TABLE_NAME, " where semester_id = #{semesterId}"})
+    String selectSemesterNameBySemesterId(@Param("semesterId") Integer semesterId);
 }
