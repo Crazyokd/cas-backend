@@ -99,7 +99,7 @@ public class ApplicationServiceImpl implements ApplicationService {
             application = applicationDAO.selectApplicationById(application.getApplicationId());
             String category = application.getCategory();
             String status = application.getStatus();
-            if (application.getStatus().equals("1")) {
+            if (status.equals("1")) {
                 // 证书申请
                 if (category.equals(ApplicationCategoryEnum.CERTIFICATE_APPLICATION.getCategory())) {
                     awardCertificateDAO.updateValidation(application.getLinkId());
