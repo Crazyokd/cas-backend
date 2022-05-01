@@ -8,7 +8,7 @@ cas-backend
 ## Usage
 1. modify the [configuration file](src/main/resources/application.yml) according to your actual situation.
 2. run `mvn package` in your terminal.
-3. rum `java -jar project` in your terminal.
+3. run `java -jar project` in your terminal.
 
 ## Doc
 - backend-API: https://www.eolink.com/share/index?shareCode=FqneKi
