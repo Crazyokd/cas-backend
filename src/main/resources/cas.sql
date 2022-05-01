@@ -1,5 +1,6 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
+drop database if exists cas;
 create database if not exists cas;
 use cas;
 
@@ -17,7 +18,7 @@ create table if not exists user
         `level` enum('0','1','2','3') default '3' comment '用户权限等级',
         `head_img_path` varchar(255) default '/home/rekord/cas/img/headImg/default/default.jpg' comment '用户头像图片路径',
 		primary key(`user_id`) using BTREE,
-        unique index `username`(`username`) using Btree
+        unique index (`username`) using Btree
 	) ENGINE=InnoDB auto_increment=125 DEFAULT charset=utf8;
 
 drop table if exists manager_1;
@@ -27,7 +28,7 @@ create table if not exists manager_1
 		`manager_id` int(11) not null auto_increment comment '一级管理员ID',
         `user_id` int(11) not null comment '用户ID',
 		primary key(`manager_id`) using BTREE,
-        constraint manager1_user_id foreign key(`user_id`) references user(`user_id`)
+        constraint FK_MANAGER1_USER_ID foreign key(`user_id`) references user(`user_id`)
     ) engine=InnoDB auto_increment=125 default charset=utf8;
 
 drop table if exists manager_2;
@@ -38,8 +39,8 @@ create table if not exists manager_2
         `user_id` int(11) not null comment '用户ID',
         `parent` int(11) not null comment '权限授予者',
         primary key(`manager_id`) using BTREE,
-        constraint manager2_user_id foreign key(`user_id`) references user(`user_id`) on delete cascade,
-		constraint manager2_parent foreign key(`parent`) references manager_1(`manager_id`) on delete cascade
+        constraint FK_MANAGER2_USER_ID foreign key(`user_id`) references user(`user_id`) on delete cascade,
+		constraint FK_MANAGER2_PARENT foreign key(`parent`) references manager_1(`manager_id`) on delete cascade
     ) engine=InnoDB auto_increment=125 default charset=utf8;
 
 drop table if exists authority_record;
@@ -51,8 +52,8 @@ create table if not exists authority_record
         `to_user_id` int(11) not null comment '权限管理被动方',
         `action` enum('0', '1') not null comment '权限管理操作, 0表示撤销，1表示授予',
         primary key(`authority_record_id`) using btree,
-        constraint authority_record_from_id foreign key(`from_user_id`) references user(`user_id`),
-        constraint authority_record_to_id foreign key(`to_user_id`) references user(`user_id`)
+        constraint FK_AUTHORITY_RECORD_FROM_ID foreign key(`from_user_id`) references user(`user_id`),
+        constraint FK_AUTHORITY_RECORD_TO_ID foreign key(`to_user_id`) references user(`user_id`)
     ) ENGINE=InnoDB default charset=utf8;
 
 
@@ -65,7 +66,7 @@ create table if not exists authority_record
 --   `head_path` varchar(255) default '/header_img/default.jpg' comment '用户头像图片路径',
 --   PRIMARY KEY (`id`) USING BTREE,
 --   UNIQUE INDEX `user_id`(`user_id`) USING BTREE,
---   CONSTRAINT hi_user_id FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+--   CONSTRAINT FK_HI_USER_ID FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 -- ) ENGINE = InnoDB AUTO_INCREMENT = 265 default charset=utf8;
 
 
@@ -103,9 +104,9 @@ create table if not exists activity
         `act_punch_longitude` double(17, 6) comment '活动打卡经度',
         `act_punch_latitude` double(17, 6) comment '活动打卡纬度',
         `act_is_publish` enum('0', '1') default '0' comment '活动是否成功发布',
-        primary key(`act_id`),
+        primary key(`act_id`) using btree,
         unique index (`act_name`) using BTREE,
-        constraint activity_semester_id foreign key(`semester_id`) references semester(`semester_id`) 
+        constraint FK_ACTIVITY_SEMESTER_ID foreign key(`semester_id`) references semester(`semester_id`) 
 	) ENGINE=InnoDB auto_increment=500 DEFAULT charset=utf8;
 
 drop table if exists par_activity;
@@ -118,9 +119,9 @@ create table if not exists par_activity
         `reg_number` int not null comment '报名号',
         `grade` int comment '活动所获分数',
         `explanation` varchar(255) not null default "普通参与" comment '加分说明',
-        primary key(`id`),
-        constraint par_activity_act_id foreign key(`act_id`) references activity(`act_id`) on delete cascade,
-        constraint par_activiry_user_id foreign key(`user_id`) references user(`user_id`) on delete cascade
+        primary key(`id`) using btree,
+        constraint FK_PAR_ACTIVITY_ACT_ID foreign key(`act_id`) references activity(`act_id`) on delete cascade,
+        constraint FK_PAR_ACTIVITY_USER_ID foreign key(`user_id`) references user(`user_id`) on delete cascade
 	) ENGINE=InnoDB DEFAULT charset=utf8;
     
 drop table if exists man_activity;
@@ -130,9 +131,9 @@ create table if not exists man_activity
 		`id` int(11) not null auto_increment comment '管理活动ID',
         `user_id` int(11) not null comment '用户ID',
         `act_id` int(11) not null comment '活动ID',
-        primary key(`id`),
-        constraint man_activity_user_id foreign key(`user_id`) references user(`user_id`) on delete cascade,
-        constraint man_activity_act_id foreign key(`act_id`) references activity(`act_id`) on delete cascade
+        primary key(`id`) using btree,
+        constraint FK_MAN_ACTIVITY_USER_ID foreign key(`user_id`) references user(`user_id`) on delete cascade,
+        constraint FK_MAN_ACTIVITY_ACT_ID foreign key(`act_id`) references activity(`act_id`) on delete cascade
 	) ENGINE=InnoDB DEFAULT charset=utf8;
     
 
@@ -152,10 +153,10 @@ create table if not exists award_certificate
         `img_path` varchar(255) default '/home/rekord/cas/img/acImg/default/default.jpg' comment '图片路径',
         `update_date` datetime DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP(0) comment '更新时间',
         `semester_id` int(11) not null comment '学期ID',
-        primary key(`ac_id`),
-        unique index ac_name(`name`) using btree,
-        constraint ac_user_id foreign key(`user_id`) references user(`user_id`) on delete cascade,
-        constraint ac_semester_id foreign key(`semester_id`) references semester(`semester_id`)
+        primary key(`ac_id`) using btree,
+        unique index (`name`) using btree,
+        constraint FK_AC_USER_ID foreign key(`user_id`) references user(`user_id`) on delete cascade,
+        constraint FK_AC_SEMESTER_ID foreign key(`semester_id`) references semester(`semester_id`)
 	) ENGINE=InnoDB DEFAULT charset=utf8;
 
 
@@ -170,9 +171,9 @@ create table if not exists message
  		`content` varchar(255) not null comment '通知内容',
         `create_time` datetime(0) not null comment '创建时间',
         `status` enum('0','1') not null default '0' comment '状态', 
-        primary key(`message_id`),
-        constraint message_from_user_id foreign key(`from_user_id`) references user(`user_id`) on delete cascade,
-        constraint message_to_user_id foreign key(`to_user_id`) references user(`user_id`) on delete cascade
+        primary key(`message_id`) using btree,
+        constraint FK_MESSAGE_FROM_USER_ID foreign key(`from_user_id`) references user(`user_id`) on delete cascade,
+        constraint FK_MESSAGE_TO_USER_ID foreign key(`to_user_id`) references user(`user_id`) on delete cascade
 	) ENGINE=InnoDB auto_increment=500 default charset=utf8;
     
 
@@ -191,9 +192,9 @@ create table if not exists application
         `reply_time` datetime comment '申请回复时间',
         `expire_day` int not null default 5 comment '过期天数，发起后如果一定时间得不到回复则自动过期',
         `comment` varchar(255) comment '备注信息',
-        primary key(`application_id`),
-        constraint application_from_id foreign key(`application_from_id`) references user(`user_id`) on delete cascade,
-        constraint application_to_id foreign key(`application_to_id`) references user(`user_id`) on delete cascade
+        primary key(`application_id`) using btree,
+        constraint FK_APPLICATION_FROM_ID foreign key(`application_from_id`) references user(`user_id`) on delete cascade,
+        constraint FK_APPLICATION_TO_ID foreign key(`application_to_id`) references user(`user_id`) on delete cascade
 	) ENGINE=InnoDB auto_increment=500 default charset=utf8;
     
 
@@ -208,7 +209,7 @@ CREATE TABLE if not exists `version`
 		`update_time` datetime DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
 		`info` varchar(255) DEFAULT NULL comment '版本信息',
 		PRIMARY KEY (`version_id`) USING BTREE,
-		UNIQUE INDEX `vname`(`version_name`) USING BTREE
+		UNIQUE INDEX (`version_name`) USING BTREE
 	) ENGINE = InnoDB AUTO_INCREMENT = 10 default charset=utf8;
 
 
