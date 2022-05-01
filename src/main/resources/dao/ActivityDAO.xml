@@ -36,7 +36,7 @@
         <include refid="Base_Column_List"/>
         from activity
         where act_is_publish = '1' and
-        datediff(current_date, act_reg_start_date) >= 0 and datediff(current_date, act_reg_end_date) &lt; 0
+        datediff(current_date, act_reg_start_date) >= 0 and datediff(current_date, act_reg_end_date) &lt;= 0
         order by `act_reg_end_date` asc
         limit #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER};
     </select>
