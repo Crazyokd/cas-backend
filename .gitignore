@@ -17,8 +17,9 @@ out
 *.jar
 *.war
 
-# db test
+# sql scripts
 test_data.sql
+test_query.sql
 
 # system related
 .DS_Store
