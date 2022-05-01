@@ -14,7 +14,7 @@ create table if not exists user
         `sn` varchar(20) unique comment '学工号',
         `sn_password` varchar(30) comment '学工号密码',
         `phone` varchar(11) not null comment '电话号码',
-        `email` varchar(20) comment '用户邮箱',
+        `email` varchar(30) comment '用户邮箱',
         `level` enum('0','1','2','3') default '3' comment '用户权限等级',
         `head_img_path` varchar(255) default '/home/rekord/cas/img/headImg/default/default.jpg' comment '用户头像图片路径',
 		primary key(`user_id`) using BTREE,
@@ -76,9 +76,10 @@ drop table if exists semester;
 create table if not exists semester 
 	(
 		`semester_id` int(11) not null auto_increment comment '学期ID',
-        `semester_name` varchar(255) not null comment '学期',
+        `semester_name` varchar(10) not null comment '学期',
         primary key(`semester_id`) using btree,
-        unique index (`semester_name`) using btree
+        unique index (`semester_name`) using btree,
+        constraint CHK_SEMESTER_NAME check (char_length(semester_name) = 9)
     ) engine=InnoDB auto_increment=100 default charset=utf8;
 
   
@@ -106,7 +107,8 @@ create table if not exists activity
         `act_is_publish` enum('0', '1') default '0' comment '活动是否成功发布',
         primary key(`act_id`) using btree,
         unique index (`act_name`) using BTREE,
-        constraint FK_ACTIVITY_SEMESTER_ID foreign key(`semester_id`) references semester(`semester_id`) 
+        constraint FK_ACTIVITY_SEMESTER_ID foreign key(`semester_id`) references semester(`semester_id`), 
+        constraint FK_ACT_REG_COUNT check (act_reg_count >= 0 and act_reg_max_count > 0)
 	) ENGINE=InnoDB auto_increment=500 DEFAULT charset=utf8;
 
 drop table if exists par_activity;
@@ -117,7 +119,7 @@ create table if not exists par_activity
         `user_id` INT(11) not null comment '用户ID',
         `act_id` int(11) not null comment '活动ID',
         `reg_number` int not null comment '报名号',
-        `grade` int comment '活动所获分数',
+        `grade` int unsigned comment '活动所获分数',
         `explanation` varchar(255) not null default "普通参与" comment '加分说明',
         primary key(`id`) using btree,
         constraint FK_PAR_ACTIVITY_ACT_ID foreign key(`act_id`) references activity(`act_id`) on delete cascade,
@@ -147,7 +149,7 @@ create table if not exists award_certificate
         `user_id` int(11) not null comment '用户ID',
         `is_valid` enum('0', '1') default '0' comment '是否纳入综测',
         `category` enum('劳育','体育','德育','智育') default '德育' comment '证书类别', 
-        `grade` int comment '加分',
+        `grade` int unsigned comment '加分',
         `explanation` varchar(80) not null comment '加分说明',
         `comment` varchar(255) not null default "" comment '证书备注',
         `img_path` varchar(255) default '/home/rekord/cas/img/acImg/default/default.jpg' comment '图片路径',
