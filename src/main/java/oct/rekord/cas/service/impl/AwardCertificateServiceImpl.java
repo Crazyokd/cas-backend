@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import oct.rekord.cas.bean.Application;
 import oct.rekord.cas.bean.AwardCertificate;
 import oct.rekord.cas.common.ApplicationCategoryEnum;
+import oct.rekord.cas.common.Image;
 import oct.rekord.cas.common.ReturnData;
 import oct.rekord.cas.dao.AwardCertificateDAO;
 import oct.rekord.cas.dao.SemesterDAO;
@@ -86,7 +87,7 @@ public class AwardCertificateServiceImpl implements AwardCertificateService {
 
     @Override
     public ReturnData uploadAwardCertificateByUserId(Integer userId, String name, String isValid, String category, String explanation, String comment, String semesterName, MultipartFile file) {
-        String fileName = FileUtil.fileTransfer(file, this.acImgDir, IMG_SUFFIX, 0, MAX_IMG_SIZE);
+        String fileName = FileUtil.fileTransfer(file, this.acImgDir, Image.IMG_SUFFIX, 0, Image.MAX_IMG_SIZE);
 
         // 通过 semesterName 查询 semesterId
         Integer semesterId = semesterDAO.selectSemesterIdBySemesterName(semesterName);

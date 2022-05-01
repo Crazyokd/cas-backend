@@ -1,6 +1,7 @@
 package oct.rekord.cas.service.impl;
 
 
+import oct.rekord.cas.common.Image;
 import oct.rekord.cas.common.ReturnData;
 import oct.rekord.cas.dao.UserInfoDAO;
 import oct.rekord.cas.service.HeadImgService;
@@ -48,7 +49,7 @@ public class HeadImgServiceImpl implements HeadImgService {
     @Override
     public ReturnData setHeadImg(HttpServletRequest request, String userId, MultipartFile file) {
         Integer userIdInteger = Integer.valueOf(userId);
-        String fileName = FileUtil.fileTransfer(file, this.headImageDir, IMG_SUFFIX, 0, MAX_IMG_SIZE);
+        String fileName = FileUtil.fileTransfer(file, this.headImageDir, Image.IMG_SUFFIX, 0, Image.MAX_IMG_SIZE);
         String imgPath = userInfoDAO.selectHeadImgPathByUserId(userIdInteger);
         userInfoDAO.updateHeadImgPath(userIdInteger, this.headImageDir + fileName);
 

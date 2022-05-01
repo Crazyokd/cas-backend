@@ -10,15 +10,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface ActivityService {
-    /**
-     * 图片后缀
-     */
-    List<String> IMG_SUFFIX = Arrays.asList(".jpg","jpeg",".png",".gif");
-
-    /**
-     * 单个图片的最大大小
-     */
-    long MAX_IMG_SIZE = 1024 * 1024 * 8;
 
     ReturnData getRunningActivity(HttpServletRequest request, Integer pageNum, Integer pageSize);
 

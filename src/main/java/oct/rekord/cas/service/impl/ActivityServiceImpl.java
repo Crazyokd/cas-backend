@@ -3,6 +3,7 @@ package oct.rekord.cas.service.impl;
 import oct.rekord.cas.bean.Activity;
 import oct.rekord.cas.bean.Application;
 import oct.rekord.cas.common.ApplicationCategoryEnum;
+import oct.rekord.cas.common.Image;
 import oct.rekord.cas.common.ReturnData;
 import oct.rekord.cas.dao.ActivityDAO;
 import oct.rekord.cas.dao.SemesterDAO;
@@ -108,7 +109,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public ReturnData publishActivity(Integer userId, String actName, String actDescription, MultipartFile actImg, Integer actRegMaxCount, Date actRegStartDate, Date actRegEndDate, Date actTime, String actPlace, String actCategory, String semesterName) {
-        String fileName = FileUtil.fileTransfer(actImg, this.activityImgDir, IMG_SUFFIX, 0, MAX_IMG_SIZE);
+        String fileName = FileUtil.fileTransfer(actImg, this.activityImgDir, Image.IMG_SUFFIX, 0, Image.MAX_IMG_SIZE);
 
         // 通过 semesterName 查询 semesterId
         Integer semesterId = semesterDAO.selectSemesterIdBySemesterName(semesterName);
