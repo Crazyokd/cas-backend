@@ -37,7 +37,7 @@
         from activity
         where act_is_publish = '1' and
         datediff(current_date, act_reg_start_date) >= 0 and datediff(current_date, act_reg_end_date) &lt;= 0
-        order by `act_reg_end_date` asc
+        order by act_reg_end_date asc, act_reg_start_date desc
         limit #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER};
     </select>
 
@@ -46,7 +46,7 @@
         select
         <include refid="Base_Column_List"/>
         from activity
-        where act_is_publish = '1' and datediff(current_timestamp, act_reg_end_date) > 0
+        where act_is_publish = '1' and datediff(current_date, act_reg_end_date) > 0
         order by `act_reg_end_date` desc
         limit #{startIndex, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER};
     </select>
@@ -57,7 +57,7 @@
         from par_activity, activity
         where par_activity.user_id = ${userId, jdbcType=INTEGER} and par_activity.act_id = activity.act_id
         and datediff(current_timestamp, act_time) = 0
-        order by abs(hour(current_time()) - hour(act_time)) asc;
+        order by abs(time_to_sec(current_time) - time_to_sec(act_time)) asc;
     </select>
 
     <select id="selectParticipateActivityByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
