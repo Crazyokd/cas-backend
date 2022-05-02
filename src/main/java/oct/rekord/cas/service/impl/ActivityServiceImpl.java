@@ -6,9 +6,9 @@ import oct.rekord.cas.common.ApplicationCategoryEnum;
 import oct.rekord.cas.common.Image;
 import oct.rekord.cas.common.ReturnData;
 import oct.rekord.cas.dao.ActivityDAO;
-import oct.rekord.cas.dao.SemesterDAO;
 import oct.rekord.cas.service.ActivityService;
 import oct.rekord.cas.service.ApplicationService;
+import oct.rekord.cas.service.SemesterService;
 import oct.rekord.cas.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,9 +28,9 @@ public class ActivityServiceImpl implements ActivityService {
     @Autowired
     ActivityDAO activityDAO;
     @Autowired
-    SemesterDAO semesterDAO;
-    @Autowired
     ApplicationService applicationService;
+    @Autowired
+    SemesterService semesterService;
 
     private String activityImgDir;
     private String activityImgDefaultDir;
@@ -99,7 +99,7 @@ public class ActivityServiceImpl implements ActivityService {
             data.put("活动地点", activity.getActPlace());
             data.put("活动类别", activity.getActCategory());
             data.put("活动是否成功发布", activity.getActIsPublish() == "1" ? "是" : "否");
-            data.put("活动所属学年", semesterDAO.selectSemesterNameBySemesterId(activity.getSemesterId()));
+            data.put("活动所属学年", semesterService.getSemesterNameBySemesterId(activity.getSemesterId()));
         } catch (Exception e) {
             e.printStackTrace();
             return ReturnData.fail(502, "获取失败");
@@ -112,7 +112,7 @@ public class ActivityServiceImpl implements ActivityService {
         String fileName = FileUtil.fileTransfer(actImg, this.activityImgDir, Image.IMG_SUFFIX, 0, Image.MAX_IMG_SIZE);
 
         // 通过 semesterName 查询 semesterId
-        Integer semesterId = semesterDAO.selectSemesterIdBySemesterName(semesterName);
+        Integer semesterId = semesterService.getSemesterIdBySemesterName(semesterName);
         if (semesterId == null) {
             return ReturnData.fail(502, "学年有误");
         }

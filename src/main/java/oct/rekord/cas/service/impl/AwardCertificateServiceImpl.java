@@ -7,10 +7,10 @@ import oct.rekord.cas.common.ApplicationCategoryEnum;
 import oct.rekord.cas.common.Image;
 import oct.rekord.cas.common.ReturnData;
 import oct.rekord.cas.dao.AwardCertificateDAO;
-import oct.rekord.cas.dao.SemesterDAO;
 import oct.rekord.cas.exception.BaseException;
 import oct.rekord.cas.service.ApplicationService;
 import oct.rekord.cas.service.AwardCertificateService;
+import oct.rekord.cas.service.SemesterService;
 import oct.rekord.cas.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,7 +51,7 @@ public class AwardCertificateServiceImpl implements AwardCertificateService {
     @Autowired
     AwardCertificateDAO awardCertificateDAO;
     @Autowired
-    SemesterDAO semesterDAO;
+    SemesterService semesterService;
     @Autowired
     ApplicationService applicationService;
 
@@ -90,7 +90,7 @@ public class AwardCertificateServiceImpl implements AwardCertificateService {
         String fileName = FileUtil.fileTransfer(file, this.acImgDir, Image.IMG_SUFFIX, 0, Image.MAX_IMG_SIZE);
 
         // 通过 semesterName 查询 semesterId
-        Integer semesterId = semesterDAO.selectSemesterIdBySemesterName(semesterName);
+        Integer semesterId = semesterService.getSemesterIdBySemesterName(semesterName);
         if (semesterId == null) {
             return ReturnData.fail(502, "学年有误");
         }
