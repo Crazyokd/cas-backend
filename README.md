@@ -14,5 +14,15 @@ cas-backend
 - backend-API: https://www.eolink.com/share/index?shareCode=FqneKi
 - project-UI: https://modao.cc/app/Q8fZsXradhqgS7lgs4RF#screen=sl20hl6epj447lm
 
+## TODO
+- [ ] optimize sql query clause
+    - [ ] use `union` for ca interface.
+    - [ ] use `view` and `join`.
+    - [ ] Merge multiple SQL clauses.
+- [ ] use transaction
+- [ ] refactor code
+    - [ ] canonical naming
+    - [ ] canonical interface
+
 ## License
 在**Apache-2.0**许可证下发布。有关更多信息，请参阅[LICENSE](LICENSE)。
