@@ -118,6 +118,7 @@ create table if not exists par_activity
 		`id` int(11) not null auto_increment comment '参与活动ID',
         `user_id` INT(11) not null comment '用户ID',
         `act_id` int(11) not null comment '活动ID',
+        `reg_time` datetime DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP(0) comment '报名时间',
         `reg_number` int not null comment '报名号',
         `grade` int unsigned comment '活动所获分数',
         `explanation` varchar(255) not null default "普通参与" comment '加分说明',
