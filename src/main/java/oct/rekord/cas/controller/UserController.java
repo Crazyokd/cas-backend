@@ -1,9 +1,7 @@
 package oct.rekord.cas.controller;
 
 import oct.rekord.cas.bean.AuthorityRecord;
-import oct.rekord.cas.bean.User;
 import oct.rekord.cas.common.ReturnData;
-import oct.rekord.cas.service.HeadImgService;
 import oct.rekord.cas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
     @Autowired
     UserService userService;
-    @Autowired
-    HeadImgService headImgService;
 
     @PostMapping("/login")
     public ReturnData login(HttpServletRequest request, @RequestParam("username") String username, @RequestParam("password") String password, String agent) {
@@ -34,12 +30,12 @@ public class UserController {
 
     @PostMapping("/get-avatar")
     public ReturnData getHeadImg(@RequestParam("userId") Integer userId) {
-            return headImgService.getHeadImg(userId);
+            return userService.getHeadImg(userId);
     }
 
     @PostMapping("/set-avatar")
     public ReturnData setHeadImg(HttpServletRequest request, @RequestParam("userId") String userId, @RequestParam("headImg") MultipartFile file) {
-        return headImgService.setHeadImg(request, userId, file);
+        return userService.setHeadImg(request, userId, file);
     }
 
     @PostMapping("/get-code")
