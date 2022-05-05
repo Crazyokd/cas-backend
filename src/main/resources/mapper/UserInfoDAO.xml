@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="oct.rekord.cas.dao.UserInfoDAO">
+
+    <resultMap id="BaseResultMap" type="oct.rekord.cas.bean.User">
+        <id property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="sn" column="sn" jdbcType="VARCHAR"/>
+        <result property="snPassword" column="sn_password" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="level" column="level" jdbcType="VARCHAR"/>
+        <result property="headImagePath" column="head_image_path" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <sql id="BaseColumnList">
+
+    </sql>
+
+
+<!--    <select id="selectUserInfoByUsernameAndPassword" resultType="oct.rekord.cas.bean.User" resultMap="BaseResultMap">-->
+<!--        select * from user-->
+<!--        where username = #{username} and password = #{password}-->
+<!--    </select>-->
+
+
+<!--    <insert id="insertUser" parameterType="oct.rekord.cas.bean.User">-->
+<!--        insert into user (`username`, `password`, `phone`)-->
+<!--        values(#(username), #{password}, #{phone})-->
+<!--    </insert>-->
+
+<!--    <select id="selectHeadImgPathByUserId" resultType="java.lang.String">-->
+<!--        select head_img_path from user-->
+<!--        where user_id = #{userId}-->
+<!--    </select>-->
+
+<!--    <update id="updateUserLevel" parameterType="oct.rekord.cas.bean.User">-->
+<!--        update user-->
+<!--        set level = #{level}-->
+<!--        where user_id = #{userId}-->
+<!--    </update>-->
+</mapper>
