@@ -16,8 +16,6 @@ public interface UserInfoDAO {
      *
      * @Param user
      */
-    @Options(useGeneratedKeys = true, keyColumn = "userId", keyProperty = "userId")
-    @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS, ") values(#{username}, #{password}, #{phone})"})
     int insertUser(User user);
 
 

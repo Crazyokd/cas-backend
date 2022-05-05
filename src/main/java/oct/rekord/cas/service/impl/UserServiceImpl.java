@@ -51,9 +51,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReturnData register(HttpServletRequest request, String username, String password, String phone) {
+    public ReturnData register(HttpServletRequest request, User user) {
         try {
-            userInfoDAO.insertUser(new User(username, password, phone));
+            userInfoDAO.insertUser(user);
             return ReturnData.success("注册成功");
         } catch (Exception e) {
             return ReturnData.fail(502, "该用户名已被注册使用");

@@ -1,6 +1,7 @@
 package oct.rekord.cas.controller;
 
 import oct.rekord.cas.bean.AuthorityRecord;
+import oct.rekord.cas.bean.User;
 import oct.rekord.cas.common.ReturnData;
 import oct.rekord.cas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ReturnData register(HttpServletRequest request, @RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("phone") String phone) {
-        return userService.register(request, username, password, phone);
+    public ReturnData register(HttpServletRequest request, User user) {
+        return userService.register(request, user);
     }
 
     @PostMapping("/get-avatar")
