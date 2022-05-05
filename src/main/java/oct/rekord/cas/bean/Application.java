@@ -16,7 +16,7 @@ public class Application {
     private Integer applicationFromId;
     private Integer applicationToId;
     private String category;
-    private String status;
+    private Integer status;
     private Integer linkId;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -26,6 +26,10 @@ public class Application {
     private Date replyTime;
     private Integer expireDay;
     private String comment;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date updateTime;
 
     public Application(Integer applicationFromId, String category, Integer linkId, String comment) {
         this.applicationFromId = applicationFromId;

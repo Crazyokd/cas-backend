@@ -44,22 +44,22 @@ public interface UserInfoDAO {
      * @param headImgPath
      * @return
      */
-    @Select({"update ", TABLE_NAME, "set head_img_path = #{headImgPath} ", "where user_id = #{userId}"})
+    @Update({"update ", TABLE_NAME, "set head_img_path = #{headImgPath} ", "where user_id = #{userId}"})
     Integer updateHeadImgPath(@Param("userId") Integer userId, @Param("headImgPath") String headImgPath);
 
     @Select("select level from user where user_id = #{userId}")
-    String selectLevelByUserId(Integer userId);
+    Integer selectLevelByUserId(Integer userId);
 
     @Update("update user set level = #{newLevel} where user_id = #{userId}")
-    int updateUserLevel(Integer userId, String newLevel);
+    int updateUserLevel(Integer userId, Integer newLevel);
 
-    @Insert("insert into manager_2(user_id, parent) values(#{userId}, #{managerId})")
+    @Insert("insert into manager2(user_id, parent) values(#{userId}, #{managerId})")
     int insertManager2(Integer userId, Integer managerId);
 
-    @Delete({"delete from manager_2 where user_id = #{userId}"})
+    @Delete({"delete from manager2 where user_id = #{userId}"})
     int removeByUserId(Integer userId);
 
-    @Select("select manager_id from manager_1 where user_id = #{parentId}")
+    @Select("select manager_id from manager1 where user_id = #{parentId}")
     int selectManagerIdByUserId(Integer parentId);
 
     @Insert("insert into authority_record(from_user_id, to_user_id, action) " +

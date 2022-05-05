@@ -97,7 +97,7 @@ public class AwardCertificateServiceImpl implements AwardCertificateService {
 
         // 若图片名为 default.jpg ，则使用默认路径
         String imgPath = (fileName.equals("default.jpg") ? this.acImgDefaultDir : this.acImgDir) + fileName;
-        AwardCertificate awardCertificate = new AwardCertificate(userId, name, "0", category, explanation, comment, imgPath, semesterId);
+        AwardCertificate awardCertificate = new AwardCertificate(userId, name, 0, category, explanation, comment, imgPath, semesterId);
         try {
             awardCertificateDAO.uploadAwardCertificate(awardCertificate);
             if (isValid.equals("1")) {

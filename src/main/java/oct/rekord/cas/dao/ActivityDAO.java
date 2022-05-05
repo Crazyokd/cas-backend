@@ -33,7 +33,7 @@ public interface ActivityDAO {
     @SelectKey(statement = "select last_insert_id()", resultType = Integer.class, before = false, keyProperty = "actId")
     int publishActivity(Activity activity);
 
-    @Update({"update " + TABLE_NAME +" set act_is_publish = '1' where act_id = #{actId}"})
+    @Update({"update " + TABLE_NAME +" set act_is_publish = 1 where act_id = #{actId}"})
     int updateValidation(@Param("actId") Integer actId);
 
     @Insert({"insert into par_activity" + "(user_id, act_id, reg_number) values(#{userId}, #{actId}, #{registerNumber})"})

@@ -65,7 +65,15 @@ public class Activity {
     private Double actPunchLatitude;
 
     // 活动是否成功发布
-    private String actIsPublish;
+    private Integer actIsPublish;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date updateTime;
 
     public Activity(String actName, String actDescription, String actImgPath, Integer actRegMaxCount, Date actRegStartDate, Date actRegEndDate, Date actTime,
                     String actPlace, String actCategory, Integer SemesterId) {

@@ -11,16 +11,19 @@
         <result property="actImgPath" column="act_img_path" jdbcType="VARCHAR"/>
         <result property="actRegCount" column="act_reg_count" jdbcType="INTEGER"/>
         <result property="actRegMaxCount" column="act_reg_max_count" jdbcType="INTEGER"/>
-        <result property="actRegStartDate" column="act_reg_start_date" jdbcType="DATE"/>
-        <result property="actRegEndDate" column="act_reg_end_date" jdbcType="DATE"/>
+        <result property="actRegStartDate" column="act_reg_start_date" jdbcType="TIMESTAMP"/>
+        <result property="actRegEndDate" column="act_reg_end_date" jdbcType="TIMESTAMP"/>
         <result property="actTime" column="act_time" jdbcType="TIMESTAMP"/>
         <result property="actPlace" column="act_place" jdbcType="VARCHAR"/>
         <result property="actCategory" column="act_category" jdbcType="VARCHAR"/>
         <result property="SemesterId" column="semester_id" jdbcType="INTEGER"/>
         <result property="actPunchStartTime" column="act_punch_start_time" jdbcType="TIMESTAMP"/>
         <result property="actPunchEndTime" column="act_punch_end_time" jdbcType="TIMESTAMP"/>
-        <result property="actPunchLongitude" column="act_punch_longitude" jdbcType="DOUBLE"/>
-        <result property="actPunchLatitude" column="act_punch_latitude" jdbcType="DOUBLE"/>
+        <result property="actPunchLongitude" column="act_punch_longitude" jdbcType="DECIMAL"/>
+        <result property="actPunchLatitude" column="act_punch_latitude" jdbcType="DECIMAL"/>
+        <result property="actIsPublish" column="act_is_publish" jdbcType="BIT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -67,15 +70,5 @@
         where par_activity.user_id = ${userId, jdbcType=INTEGER} and par_activity.act_id = activity.act_id
         order by `act_time` desc;
     </select>
-
-<!--    <select id="selectNoticeListByIdList" resultType="cn.edu.csust.coursecard.bean.Notice">-->
-<!--        select-->
-<!--        <include refid="Base_Column_List"/>-->
-<!--        from notice-->
-<!--        where id in-->
-<!--        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">-->
-<!--            #{item}-->
-<!--        </foreach>-->
-<!--    </select>-->
 
 </mapper>

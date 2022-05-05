@@ -31,7 +31,7 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @throws Exception
      */
     public void insertApplication(Application application) throws Exception {
-        int level = Integer.parseInt(userInfoDAO.selectLevelByUserId(application.getApplicationFromId())) - 1;
+        int level = userInfoDAO.selectLevelByUserId(application.getApplicationFromId()) - 1;
         List<Integer> manager = null;
         if (level == 1) {
             manager = applicationDAO.selectManager1();
@@ -98,8 +98,8 @@ public class ApplicationServiceImpl implements ApplicationService {
             applicationDAO.updateApplication(application);
             application = applicationDAO.selectApplicationById(application.getApplicationId());
             String category = application.getCategory();
-            String status = application.getStatus();
-            if (status.equals("1")) {
+            Integer status = application.getStatus();
+            if (status == 1) {
                 // 证书申请
                 if (category.equals(ApplicationCategoryEnum.CERTIFICATE_APPLICATION.getCategory())) {
                     awardCertificateDAO.updateValidation(application.getLinkId());

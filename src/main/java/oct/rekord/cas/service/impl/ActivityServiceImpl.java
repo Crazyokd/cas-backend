@@ -98,7 +98,7 @@ public class ActivityServiceImpl implements ActivityService {
             data.put("活动开始时间", activity.getActTime());
             data.put("活动地点", activity.getActPlace());
             data.put("活动类别", activity.getActCategory());
-            data.put("活动是否成功发布", activity.getActIsPublish() == "1" ? "是" : "否");
+            data.put("活动是否成功发布", activity.getActIsPublish() == 1 ? "是" : "否");
             data.put("活动所属学年", semesterService.getSemesterNameBySemesterId(activity.getSemesterId()));
         } catch (Exception e) {
             e.printStackTrace();

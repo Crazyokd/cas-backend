@@ -14,10 +14,10 @@ public interface ApplicationDAO {
             "values(#{applicationFromId}, #{applicationToId}, #{category}, #{linkId}, #{comment})")
     int insertApplication(Application application);
 
-    @Select("select user_id from manager_1")
+    @Select("select user_id from manager1")
     List<Integer> selectManager1();
 
-    @Select("select user_id from manager_2")
+    @Select("select user_id from manager2")
     List<Integer> selectManager2();
 
     @Select("select * from application where application_to_id = #{userId}")

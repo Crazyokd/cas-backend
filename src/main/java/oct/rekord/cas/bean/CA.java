@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class CA {
     private String name;
 
-    private String grade;
+    private Integer grade;
 
     private String category;
 

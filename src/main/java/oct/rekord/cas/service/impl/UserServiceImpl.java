@@ -94,11 +94,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ReturnData authorize(AuthorityRecord authorityRecord) {
-        String newLevel = ("1".equals(authorityRecord.getAction()) ? "2" : "3");
+        Integer newLevel = authorityRecord.getAction() == 1 ? 2 : 3;
         try {
             // 更新用户等级
             userInfoDAO.updateUserLevel(authorityRecord.getToUserId(), newLevel);
-            if ("1".equals(authorityRecord.getAction())) {
+            if (1 == authorityRecord.getAction()) {
                 int managerId = userInfoDAO.selectManagerIdByUserId(authorityRecord.getFromUserId());
                 userInfoDAO.insertManager2(authorityRecord.getToUserId(), managerId);
             } else {
