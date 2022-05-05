@@ -25,10 +25,10 @@
     </sql>
 
 
-<!--    <select id="selectUserInfoByUsernameAndPassword" resultType="oct.rekord.cas.bean.User" resultMap="BaseResultMap">-->
-<!--        select * from user-->
-<!--        where username = #{username} and password = #{password}-->
-<!--    </select>-->
+    <select id="selectUserInfoByUsernameAndPassword" resultType="oct.rekord.cas.bean.User" resultMap="BaseResultMap">
+        select * from user
+        where username = #{username} and password = #{password}
+    </select>
 
 
 <!--    <insert id="insertUser" parameterType="oct.rekord.cas.bean.User">-->

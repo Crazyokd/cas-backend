@@ -68,10 +68,10 @@ public class UserServiceImpl implements UserService {
         try {
             User user = userInfoDAO.selectUserInfoByUsernameAndPassword(username, password);
             data.put("账号ID", user.getUserId());
-//        data.put("用户名", user.getUsername());
+            data.put("用户名", user.getUsername());
             data.put("级别", user.getLevel());
             data.put("邮箱", user.getEmail());
-            data.put("头像", user.getHeadImgPath());
+//            data.put("头像", user.getHeadImgPath());
             data.put("手机号", user.getPhone());
             data.put("学号", user.getSn());
             data.put("学号密码", user.getSnPassword());

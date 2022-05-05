@@ -25,7 +25,6 @@ public interface UserInfoDAO {
      * @param password
      * @return
      */
-    @Select({"select","* from ",TABLE_NAME,"where username = #{username} and password = #{password}"})
     User selectUserInfoByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
     /** 通过 user_id 得到用户头像文件路径
