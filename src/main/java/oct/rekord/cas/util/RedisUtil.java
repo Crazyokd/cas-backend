@@ -149,14 +149,26 @@ public class RedisUtil {
         }
     }
 
-
-    public long incr(final String key, final long delta) {
+    /**
+     *
+     * @param key
+     * @param delta
+     * @return
+     */
+    public long increment(final String key, final long delta) {
         if (delta < 0) {
             throw new RuntimeException("递增因子必须大于0");
         }
         return stringRedisTemplate.opsForValue().increment(key, delta);
     }
 
+    /**
+     *
+     * @param key
+     * @param value
+     * @param expire
+     * @return
+     */
     public boolean setObject(String key, Object value, long expire) {
         try {
             redisTemplate.opsForValue().set(key, value, expire, TimeUnit.MILLISECONDS);
@@ -167,6 +179,12 @@ public class RedisUtil {
         }
     }
 
+    /**
+     *
+     * @param key
+     * @param value
+     * @return
+     */
     public boolean setObject(String key, Object value) {
         try {
             redisTemplate.opsForValue().set(key, value);
@@ -177,6 +195,11 @@ public class RedisUtil {
         }
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     public Object getObject(String key) {
         try {
             return redisTemplate.opsForValue().get(key);
