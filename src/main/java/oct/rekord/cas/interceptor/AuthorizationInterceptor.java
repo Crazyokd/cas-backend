@@ -1,6 +1,7 @@
 package oct.rekord.cas.interceptor;
 
 
+import lombok.extern.slf4j.Slf4j;
 import oct.rekord.cas.common.CodeEnum;
 import oct.rekord.cas.common.Token;
 import oct.rekord.cas.exception.BaseException;
@@ -17,7 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2022/5/6 15:34
  */
 
-@Component
+@Slf4j
+@Component("authorizationInterceptor")
 public class AuthorizationInterceptor implements HandlerInterceptor {
     @Autowired
     RedisUtil redisUtil;
