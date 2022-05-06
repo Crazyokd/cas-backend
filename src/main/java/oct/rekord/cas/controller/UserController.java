@@ -25,18 +25,18 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ReturnData register(HttpServletRequest request, User user) {
-        return userService.register(request, user);
+    public ReturnData register(User user) {
+        return userService.register(user);
     }
 
     @PostMapping("/get-avatar")
-    public ReturnData getHeadImg(@RequestParam("userId") Integer userId) {
-            return userService.getHeadImg(userId);
+    public ReturnData getHeadImg(HttpServletRequest request) {
+            return userService.getHeadImg(request);
     }
 
     @PostMapping("/set-avatar")
-    public ReturnData setHeadImg(HttpServletRequest request, @RequestParam("userId") String userId, @RequestParam("headImg") MultipartFile file) {
-        return userService.setHeadImg(request, userId, file);
+    public ReturnData setHeadImg(HttpServletRequest request, @RequestParam("headImg") MultipartFile file) {
+        return userService.setHeadImg(request, file);
     }
 
     @PostMapping("/get-code")

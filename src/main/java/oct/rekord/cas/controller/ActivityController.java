@@ -28,23 +28,23 @@ public class ActivityController {
     ActivityService activityService;
 
     @PostMapping("/get-running")
-    public ReturnData getRunningActivity(HttpServletRequest request, @RequestParam("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize) {
-        return activityService.getRunningActivity(request, pageNum, pageSize);
+    public ReturnData getRunningActivity(@RequestParam("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize) {
+        return activityService.getRunningActivity(pageNum, pageSize);
     }
 
     @PostMapping("/get-closed")
-    public ReturnData getClosedActivity(HttpServletRequest request, @RequestParam("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize) {
-        return activityService.getClosedActivity(request, pageNum, pageSize);
+    public ReturnData getClosedActivity(@RequestParam("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize) {
+        return activityService.getClosedActivity(pageNum, pageSize);
     }
 
     @PostMapping("/get-participate")
-    public ReturnData getParticipateActivity(HttpServletRequest request, @RequestParam("userId") String userId) {
-        return activityService.getParticipateActivity(request, userId);
+    public ReturnData getParticipateActivity(HttpServletRequest request) {
+        return activityService.getParticipateActivity(request);
     }
 
     @PostMapping("/get-today")
-    public ReturnData getTodayActivity(HttpServletRequest request, @RequestParam("userId") String userId) {
-        return activityService.getTodayActivity(request, userId);
+    public ReturnData getTodayActivity(HttpServletRequest request) {
+        return activityService.getTodayActivity(request);
     }
 
     @PostMapping("/get-detail")
@@ -53,16 +53,16 @@ public class ActivityController {
     }
 
     @PostMapping("/publish")
-    public ReturnData publishActivity(@RequestParam("actName") String actName, @RequestParam("actDescription") String actDescription,
+    public ReturnData publishActivity(HttpServletRequest request, @RequestParam("actName") String actName, @RequestParam("actDescription") String actDescription,
                                       @RequestParam(value = "actImg", required = false) MultipartFile actImg, @RequestParam("actRegMaxCount") Integer actRegMaxCount,
                                       @RequestParam("actRegStartDate") @DateTimeFormat(pattern = "yyyy-MM-dd")Date actRegStartDate, @RequestParam("actRegEndDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date actRegEndDate,
                                       @RequestParam("actTime") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date actTime, @RequestParam("actPlace") String actPlace,
-                                      @RequestParam("actCategory") String actCategory, @RequestParam("semesterName") String semesterName, @RequestParam("userId") Integer userId) throws ParseException {
-        return activityService.publishActivity(userId, actName, actDescription, actImg, actRegMaxCount, actRegStartDate, actRegEndDate, actTime, actPlace, actCategory, semesterName);
+                                      @RequestParam("actCategory") String actCategory, @RequestParam("semesterName") String semesterName) throws ParseException {
+        return activityService.publishActivity(request, actName, actDescription, actImg, actRegMaxCount, actRegStartDate, actRegEndDate, actTime, actPlace, actCategory, semesterName);
     }
 
     @PostMapping("/register")
-    public ReturnData registerActivity(@RequestParam("userId") Integer userId, @RequestParam("actId") Integer actId, @RequestParam("registerNumber") Integer registerNumber) {
-        return activityService.registerActivity(userId, actId, registerNumber);
+    public ReturnData registerActivity(HttpServletRequest request, @RequestParam("actId") Integer actId, @RequestParam("registerNumber") Integer registerNumber) {
+        return activityService.registerActivity(request, actId, registerNumber);
     }
 }

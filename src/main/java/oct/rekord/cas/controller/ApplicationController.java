@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/application")
 public class ApplicationController {
@@ -15,23 +17,23 @@ public class ApplicationController {
     private ApplicationService applicationService;
 
     @PostMapping("/apply")
-    public ReturnData apply(Application application) {
-        return applicationService.addApplication(application);
+    public ReturnData apply(HttpServletRequest request, Application application) {
+        return applicationService.addApplication(request, application);
     }
 
     @PostMapping("/get-all")
-    public ReturnData getAll(Integer userId) {
-        return applicationService.getAllApplication(userId);
+    public ReturnData getAll(HttpServletRequest request) {
+        return applicationService.getAllApplication(request);
     }
 
     @PostMapping("/get-new")
-    public ReturnData getNew(Integer userId) {
-        return applicationService.getNewApplication(userId);
+    public ReturnData getNew(HttpServletRequest request) {
+        return applicationService.getNewApplication(request);
     }
 
     @PostMapping("/get-my")
-    public ReturnData getMy(Integer userId) {
-        return applicationService.getMyApplication(userId);
+    public ReturnData getMy(HttpServletRequest request) {
+        return applicationService.getMyApplication(request);
     }
 
     @PostMapping("/process")

@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReturnData register(HttpServletRequest request, User user) {
+    public ReturnData register(User user) {
         try {
             userInfoDAO.insertUser(user);
             return ReturnData.success("注册成功");
@@ -126,11 +126,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReturnData setHeadImg(HttpServletRequest request, String userId, MultipartFile file) {
-        Integer userIdInteger = Integer.valueOf(userId);
+    public ReturnData setHeadImg(HttpServletRequest request, MultipartFile file) {
+        Integer userId = Integer.valueOf(request.getAttribute("userId").toString());
         String fileName = FileUtil.fileTransfer(file, this.headImageDir, Image.IMG_SUFFIX, 0, Image.MAX_IMG_SIZE);
-        String imgPath = userInfoDAO.selectHeadImgPathByUserId(userIdInteger);
-        userInfoDAO.updateHeadImgPath(userIdInteger, this.headImageDir + fileName);
+        String imgPath = userInfoDAO.selectHeadImgPathByUserId(userId);
+        userInfoDAO.updateHeadImgPath(userId, this.headImageDir + fileName);
 
         // 如果是默认图片则不进行删除
         if(imgPath != null && !imgPath.contains(this.headImageDefaultDir)){
@@ -144,8 +144,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public ReturnData getHeadImg(Integer userId) {
-        String fileName = userInfoDAO.selectHeadImgPathByUserId(userId);
+    public ReturnData getHeadImg(HttpServletRequest request) {
+        String fileName = userInfoDAO.selectHeadImgPathByUserId(Integer.valueOf(request.getAttribute("userId").toString()));
         try {
             return ReturnData.success(Base64.getEncoder().encodeToString(FileUtil.fileNameToBytes(fileName)));
         } catch (Exception e) {

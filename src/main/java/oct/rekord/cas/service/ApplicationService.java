@@ -3,16 +3,18 @@ package oct.rekord.cas.service;
 import oct.rekord.cas.bean.Application;
 import oct.rekord.cas.common.ReturnData;
 
+import javax.servlet.http.HttpServletRequest;
+
 public interface ApplicationService {
     void insertApplication(Application application) throws Exception;
 
-    ReturnData addApplication(Application application);
+    ReturnData addApplication(HttpServletRequest request, Application application);
 
-    ReturnData getAllApplication(Integer userId);
+    ReturnData getAllApplication(HttpServletRequest request);
 
-    ReturnData getNewApplication(Integer userId);
+    ReturnData getNewApplication(HttpServletRequest request);
 
-    ReturnData getMyApplication(Integer userId);
+    ReturnData getMyApplication(HttpServletRequest request);
 
     ReturnData processApplication(Application application);
 }

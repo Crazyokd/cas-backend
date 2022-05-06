@@ -53,7 +53,7 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public ReturnData getRunningActivity(HttpServletRequest request, Integer pageNum, Integer pageSize) {
+    public ReturnData getRunningActivity(Integer pageNum, Integer pageSize) {
         pageNum = pageNum < 1 ? 1 : pageNum;
         pageSize = pageSize == null ? 4 : pageSize;
         int startIndex = (pageNum - 1) * pageSize;
@@ -63,7 +63,7 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public ReturnData getClosedActivity(HttpServletRequest request, Integer pageNum, Integer pageSize) {
+    public ReturnData getClosedActivity(Integer pageNum, Integer pageSize) {
         pageNum = pageNum < 1 ? 1 : pageNum;
         pageSize = pageSize == null ? 4 : pageSize;
         int startIndex = (pageNum - 1) * pageSize;
@@ -72,14 +72,14 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public ReturnData getParticipateActivity(HttpServletRequest request, String userId) {
-        List<Activity> activityList = activityDAO.selectParticipateActivityByUserId(Integer.valueOf(userId));
+    public ReturnData getParticipateActivity(HttpServletRequest request) {
+        List<Activity> activityList = activityDAO.selectParticipateActivityByUserId(Integer.valueOf(request.getAttribute("userId").toString()));
         return ReturnData.success(activityList);
     }
 
     @Override
-    public ReturnData getTodayActivity(HttpServletRequest request, String userId) {
-        List<Activity> activityList = activityDAO.selectTodayActivityByUserId(Integer.valueOf(userId));
+    public ReturnData getTodayActivity(HttpServletRequest request) {
+        List<Activity> activityList = activityDAO.selectTodayActivityByUserId(Integer.valueOf(request.getAttribute("userId").toString()));
         return ReturnData.success(activityList);
     }
 
@@ -108,7 +108,7 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public ReturnData publishActivity(Integer userId, String actName, String actDescription, MultipartFile actImg, Integer actRegMaxCount, Date actRegStartDate, Date actRegEndDate, Date actTime, String actPlace, String actCategory, String semesterName) {
+    public ReturnData publishActivity(HttpServletRequest request, String actName, String actDescription, MultipartFile actImg, Integer actRegMaxCount, Date actRegStartDate, Date actRegEndDate, Date actTime, String actPlace, String actCategory, String semesterName) {
         String fileName = FileUtil.fileTransfer(actImg, this.activityImgDir, Image.IMG_SUFFIX, 0, Image.MAX_IMG_SIZE);
 
         // 通过 semesterName 查询 semesterId
@@ -122,7 +122,7 @@ public class ActivityServiceImpl implements ActivityService {
                 Activity activity = new Activity(actName, actDescription, actImgPath, actRegMaxCount, actRegStartDate,
                     actRegEndDate, actTime, actPlace, actCategory, semesterId);
                 activityDAO.publishActivity(activity);
-                applicationService.insertApplication(new Application(userId, ApplicationCategoryEnum.ACTIVITY_APPLICATION.getCategory(), activity.getActId(), ""));
+                applicationService.insertApplication(new Application(Integer.valueOf(request.getAttribute("userId").toString()), ApplicationCategoryEnum.ACTIVITY_APPLICATION.getCategory(), activity.getActId(), ""));
         } catch (Exception e) {
             return ReturnData.fail(502, "活动创建失败");
         }
@@ -130,8 +130,8 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public ReturnData registerActivity(Integer userId, Integer actId, Integer registerNumber) {
-        activityDAO.registerActivity(userId, actId, registerNumber);
+    public ReturnData registerActivity(HttpServletRequest request, Integer actId, Integer registerNumber) {
+        activityDAO.registerActivity(Integer.valueOf(request.getAttribute("userId").toString()), actId, registerNumber);
         return ReturnData.success();
     }
 }

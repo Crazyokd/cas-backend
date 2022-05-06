@@ -14,8 +14,8 @@ public class CAController {
     @Autowired
     CAService caService;
     @PostMapping("/getCAResult")
-    ReturnData getCAResult(HttpServletRequest request, @RequestParam("userId") String userId, @RequestParam("semesterName") String semesterName) {
-        return caService.getCAResult(userId, semesterName);
+    ReturnData getCAResult(HttpServletRequest request, @RequestParam("semesterName") String semesterName) {
+        return caService.getCAResult(request, semesterName);
     }
 }
 

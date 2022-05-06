@@ -9,6 +9,7 @@ import oct.rekord.cas.service.SemesterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class CAServiceImpl implements CAService {
     SemesterService semesterService;
 
     @Override
-    public ReturnData getCAResult(String userId, String semesterName) {
-        Integer userIdInteger = Integer.valueOf(userId);
+    public ReturnData getCAResult(HttpServletRequest request, String semesterName) {
+        Integer userIdInteger = Integer.valueOf(Integer.valueOf(request.getAttribute("userId").toString()));
 
         // 通过 semesterName 查询 semesterId
         Integer semesterId = semesterService.getSemesterIdBySemesterName(semesterName);

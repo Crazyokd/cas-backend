@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Slf4j
 @RestController
 @RequestMapping("awardcertificate")
@@ -21,16 +23,16 @@ public class AwardCertificateController {
     AwardCertificateService acService;
 
     @PostMapping("/get-all")
-    ReturnData getAllAC(@RequestParam("userId") Integer userId) {
-        return acService.getAllAC(userId);
+    ReturnData getAllAC(HttpServletRequest request) {
+        return acService.getAllAC(request);
     }
 
     @PostMapping("/upload")
-    ReturnData uploadAwardCertificate(@RequestParam("userId") Integer userId, @RequestParam("name") String name, @RequestParam("isValid") String isValid,
+    ReturnData uploadAwardCertificate(HttpServletRequest request, @RequestParam("name") String name, @RequestParam("isValid") String isValid,
                                       @RequestParam("category") String category, @RequestParam("explanation") String explanation, @RequestParam("comment") String comment,
                                       @RequestParam("semesterName") String semesterName, @RequestParam(name = "acImg", required = false) MultipartFile file) {
 
-        return acService.uploadAwardCertificateByUserId(userId, name, isValid, category, explanation, comment, semesterName, file);
+        return acService.uploadAwardCertificateByUserId(request, name, isValid, category, explanation, comment, semesterName, file);
     }
 
     @PostMapping("/get-detail")

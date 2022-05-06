@@ -11,18 +11,18 @@ import java.util.List;
 
 public interface ActivityService {
 
-    ReturnData getRunningActivity(HttpServletRequest request, Integer pageNum, Integer pageSize);
+    ReturnData getRunningActivity(Integer pageNum, Integer pageSize);
 
-    ReturnData getClosedActivity(HttpServletRequest request, Integer pageNum, Integer pageSize);
+    ReturnData getClosedActivity(Integer pageNum, Integer pageSize);
 
-    ReturnData getParticipateActivity(HttpServletRequest request, String userId);
+    ReturnData getParticipateActivity(HttpServletRequest request);
 
-    ReturnData getTodayActivity(HttpServletRequest request, String userId);
+    ReturnData getTodayActivity(HttpServletRequest request);
 
     ReturnData getActivity(Integer actId);
 
-    ReturnData publishActivity(Integer userId, String actName, String actDescription, MultipartFile actImg, Integer actRegMaxCount, Date actRegStartDate,
+    ReturnData publishActivity(HttpServletRequest request, String actName, String actDescription, MultipartFile actImg, Integer actRegMaxCount, Date actRegStartDate,
                                Date actRegEndDate, Date actTime, String actPlace, String actCategory, String semesterName);
 
-    ReturnData registerActivity(Integer userId, Integer actId, Integer registerNumber);
+    ReturnData registerActivity(HttpServletRequest request, Integer actId, Integer registerNumber);
 }

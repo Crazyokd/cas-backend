@@ -11,6 +11,7 @@ import oct.rekord.cas.service.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -44,8 +45,9 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public ReturnData addApplication(Application application) {
+    public ReturnData addApplication(HttpServletRequest request, Application application) {
         try {
+            application.setApplicationFromId(Integer.valueOf(request.getAttribute("userId").toString()));
             insertApplication(application);
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,10 +57,10 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public ReturnData getAllApplication(Integer userId) {
+    public ReturnData getAllApplication(HttpServletRequest request) {
         List<Application> applications;
         try {
-            applications = applicationDAO.selectApplicationByToId(userId);
+            applications = applicationDAO.selectApplicationByToId(Integer.valueOf(request.getAttribute("userId").toString()));
         } catch (Exception e) {
             e.printStackTrace();
             return ReturnData.fail(502, "获取失败");
@@ -67,10 +69,10 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public ReturnData getNewApplication(Integer userId) {
+    public ReturnData getNewApplication(HttpServletRequest request) {
         List<Application> applications;
         try {
-            applications = applicationDAO.selectNewApplicationByToId(userId);
+            applications = applicationDAO.selectNewApplicationByToId(Integer.valueOf(request.getAttribute("userId").toString()));
         } catch (Exception e) {
             e.printStackTrace();
             return ReturnData.fail(502, "获取失败");
@@ -79,10 +81,10 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public ReturnData getMyApplication(Integer userId) {
+    public ReturnData getMyApplication(HttpServletRequest request) {
         List<Application> applications;
         try {
-            applications = applicationDAO.selectMyApplicationByFromId(userId);
+            applications = applicationDAO.selectMyApplicationByFromId(Integer.valueOf(request.getAttribute("userId").toString()));
         } catch (Exception e) {
             e.printStackTrace();
             return ReturnData.fail(502, "获取失败");

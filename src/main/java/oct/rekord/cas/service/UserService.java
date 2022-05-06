@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface UserService {
 
-    ReturnData register(HttpServletRequest request, User user);
+    ReturnData register(User user);
 
     ReturnData login(String username, String password, String version);
 
@@ -17,7 +17,7 @@ public interface UserService {
 
     ReturnData authorize(AuthorityRecord authorityRecord);
 
-    ReturnData setHeadImg(HttpServletRequest request, String userId, MultipartFile file);
+    ReturnData setHeadImg(HttpServletRequest request, MultipartFile file);
 
-    ReturnData getHeadImg(Integer userId);
+    ReturnData getHeadImg(HttpServletRequest request);
 }

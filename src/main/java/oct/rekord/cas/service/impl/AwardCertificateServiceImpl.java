@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.Base64;
 import java.util.LinkedHashMap;
@@ -68,8 +69,8 @@ public class AwardCertificateServiceImpl implements AwardCertificateService {
         return Base64.getEncoder().encodeToString(bytes);
     }
 
-    public ReturnData getAllAC(Integer userId) {
-        List<AwardCertificate> awardCertificateList = awardCertificateDAO.selectAwardCertificateByUserID(userId);
+    public ReturnData getAllAC(HttpServletRequest request) {
+        List<AwardCertificate> awardCertificateList = awardCertificateDAO.selectAwardCertificateByUserID(Integer.valueOf(request.getAttribute("userId").toString()));
 
         // 将所有证书路径转化为证书
         for (AwardCertificate ac : awardCertificateList) {
@@ -86,7 +87,8 @@ public class AwardCertificateServiceImpl implements AwardCertificateService {
     }
 
     @Override
-    public ReturnData uploadAwardCertificateByUserId(Integer userId, String name, String isValid, String category, String explanation, String comment, String semesterName, MultipartFile file) {
+    public ReturnData uploadAwardCertificateByUserId(HttpServletRequest request, String name, String isValid, String category, String explanation, String comment, String semesterName, MultipartFile file) {
+        Integer userId = Integer.valueOf(request.getAttribute("userId").toString());
         String fileName = FileUtil.fileTransfer(file, this.acImgDir, Image.IMG_SUFFIX, 0, Image.MAX_IMG_SIZE);
 
         // 通过 semesterName 查询 semesterId
