@@ -20,4 +20,10 @@ public class AuthorityRecord {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
+
+    public AuthorityRecord(Integer fromUserId, Integer toUserId, Integer action) {
+        this.fromUserId = fromUserId;
+        this.toUserId = toUserId;
+        this.action = action;
+    }
 }

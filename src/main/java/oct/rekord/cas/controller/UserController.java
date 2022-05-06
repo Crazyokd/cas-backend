@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @PostMapping("/authorize")
-    public ReturnData authorize(AuthorityRecord authorityRecord) {
-        return userService.authorize(authorityRecord);
+    public ReturnData authorize(HttpServletRequest request, @RequestParam("toUsername") String toUsername, @RequestParam("action") Integer action) {
+        return userService.authorize(request, toUsername, action);
     }
 }

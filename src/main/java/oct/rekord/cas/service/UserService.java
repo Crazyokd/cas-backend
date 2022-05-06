@@ -15,7 +15,7 @@ public interface UserService {
 
     ReturnData getCode(String phone, Integer bits);
 
-    ReturnData authorize(AuthorityRecord authorityRecord);
+    ReturnData authorize(HttpServletRequest request, String toUsername, Integer action);
 
     ReturnData setHeadImg(HttpServletRequest request, MultipartFile file);
 

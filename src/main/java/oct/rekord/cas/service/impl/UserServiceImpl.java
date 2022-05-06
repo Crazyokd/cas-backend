@@ -105,7 +105,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReturnData authorize(AuthorityRecord authorityRecord) {
+    public ReturnData authorize(HttpServletRequest request, String toUsername, Integer action) {
+        Integer toUserId = userInfoDAO.selectUserIdByUsername(toUsername);
+        AuthorityRecord authorityRecord = new AuthorityRecord(Integer.valueOf(request.getAttribute("userId").toString()), toUserId, action);
         Integer newLevel = authorityRecord.getAction() == 1 ? 2 : 3;
         try {
             // 更新用户等级

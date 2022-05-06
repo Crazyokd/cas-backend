@@ -18,6 +18,12 @@ public interface UserInfoDAO {
      */
     int insertUser(User user);
 
+    /**
+     *
+     * @param username
+     * @return
+     */
+    Integer selectUserIdByUsername(@Param("username") String username);
 
     /** 通过账号密码得到用户所有信息
      *

@@ -30,7 +30,10 @@
         where username = #{username} and password = #{password}
     </select>
 
-
+    <select id="selectUserIdByUsername" resultType="java.lang.Integer">
+        select user_id from user
+        where username = #{username}
+    </select>
 <!--    <insert id="insertUser" parameterType="oct.rekord.cas.bean.User">-->
 <!--        insert into user (`username`, `password`, `phone`)-->
 <!--        values(#(username), #{password}, #{phone})-->
