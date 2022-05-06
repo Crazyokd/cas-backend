@@ -11,7 +11,7 @@ public interface UserService {
 
     ReturnData register(HttpServletRequest request, User user);
 
-    ReturnData login(HttpServletRequest request, String username, String password, String agent);
+    ReturnData login(String username, String password, String version);
 
     ReturnData getCode(String phone, Integer bits);
 

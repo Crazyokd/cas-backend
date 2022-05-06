@@ -1,12 +1,14 @@
 package oct.rekord.cas.service.impl;
 
 
+import oct.rekord.cas.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import oct.rekord.cas.bean.AuthorityRecord;
 import oct.rekord.cas.bean.User;
 import oct.rekord.cas.common.Image;
 import oct.rekord.cas.common.Message;
 import oct.rekord.cas.common.ReturnData;
+import oct.rekord.cas.common.Token;
 import oct.rekord.cas.dao.UserInfoDAO;
 import oct.rekord.cas.service.UserService;;
 import oct.rekord.cas.util.FileUtil;
@@ -26,6 +28,10 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserInfoDAO userInfoDAO;
+
+    @Autowired
+    RedisUtil redisUtil;
+
 
     private String headImageDefaultDir;
 
@@ -62,12 +68,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReturnData login(HttpServletRequest request, String username, String password, String agent) {
+    public ReturnData login(String username, String password, String version) {
+        log.error(version);
         Map<String, Object> data = new LinkedHashMap<>();
 
         try {
             User user = userInfoDAO.selectUserInfoByUsernameAndPassword(username, password);
-            data.put("账号ID", user.getUserId());
+            String token = Token.createToken();
+            Integer userId = user.getUserId();
+            redisUtil.set(Token.USER_TOKEN_PREFIX + token, userId.toString(), Token.TOKEN_EXPIRE);
+            redisUtil.set(Token.USER_ID_PREFIX + userId, token, Token.TOKEN_EXPIRE);
+
+            data.put("token", token);
             data.put("用户名", user.getUsername());
             data.put("级别", user.getLevel());
             data.put("邮箱", user.getEmail());

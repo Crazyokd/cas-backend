@@ -20,8 +20,8 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/login")
-    public ReturnData login(HttpServletRequest request, @RequestParam("username") String username, @RequestParam("password") String password, String agent) {
-        return userService.login(request, username, password, agent);
+    public ReturnData login(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam(value = "version", required = false) String version) {
+        return userService.login(username, password, version);
     }
 
     @PostMapping("/register")
