@@ -30,7 +30,7 @@ spring:
     maxWait: 60000
     minEvictableIdleTimeMillis: 300000
     minIdle: 5
-    password: 17573401869yicao
+    password: 123456
     poolPreparedStatements: true
     testOnBorrow: false
     testOnReturn: false
@@ -45,7 +45,7 @@ spring:
     throw-exception-if-no-handler-found: true
   redis:
     host: 120.55.14.194
-    password: 17573401869yicao
+    password: 123456
     port: 6379
     timeout: 3000
   resources:
