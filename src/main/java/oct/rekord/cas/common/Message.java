@@ -9,8 +9,8 @@ import com.aliyun.teaopenapi.models.*;
 
 public class Message {
 
-    private static String accessKeyId = "LTAI5t9JEwW7hiSUMVGHWTp7";
-    private static String accessKeySecret = "hLCfCZdNnIsjSTjiFQCNog47ixVMVy";
+    private static String accessKeyId = "useYourOwnAccessKeyId";
+    private static String accessKeySecret = "useYourOwnAccessKeySecret";
 
 //    /**
 //     * 使用AK&SK初始化账号Client
